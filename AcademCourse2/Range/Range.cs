@@ -28,51 +28,54 @@ namespace Range
             return number >= From && number <= To;
         }
 
-        public Range GetIntersection(Range Range)
+        public Range GetIntersection(Range range)
         {
-            if (Range.To < From || To < Range.From)
+            if (range.To <= From || To <= range.From)
             {
                 return null;
             }
             else
             {
-                return new Range(Math.Max(Range.From, From), Math.Min(Range.To, To));
+                return new Range(Math.Max(range.From, From), Math.Min(range.To, To));
             }
         }
 
-        public Range[] GetUnion(Range Range)
+        public Range[] GetUnion(Range range)
         {
-            if (Range.To < From || To < Range.From)
+            if (range.To < From || To < range.From)
             {
-                return new Range[] { new Range(Range.From, Range.To), new Range(From, To) };
+                return new Range[] { new Range(range.From, range.To), new Range(From, To) };
             }
             else
             {
-                return new Range[] { new Range(Math.Min(Range.From, From), Math.Max(Range.To, To)) };
+                return new Range[] { new Range(Math.Min(range.From, From), Math.Max(range.To, To)) };
             }
         }
 
-        public Range[] GetExcept(Range Range)
+        public Range[] GetExcept(Range range)
         {
-            if (To <= Range.From || Range.To <= From)
+            if (To < range.From || range.To < From)
             {
                 return new Range[] { new Range(From, To) };
             }
-            else if (From < Range.From && To > Range.From && To <= Range.To)
+            else if (From >= range.From && To <= range.To)
             {
-                return new Range[] { new Range(From, Range.From) };
-            }
-            else if (Range.From <= From && Range.To > From && Range.To < To)
-            {
-                return new Range[] { new Range(Range.To, To) };
-            }
-            else if (From < Range.From && To > Range.To)
-            {
-                return new Range[] { new Range(From, Range.From), new Range(Range.To, To) };
+                return new Range[0];
             }
             else
             {
-                return new Range[0];
+                if (To <= range.To)
+                {
+                    return new Range[] { new Range(From, range.From) };
+                }
+                else if (From >= range.From)
+                {
+                    return new Range[] { new Range(range.To, To) };
+                }
+                else
+                {
+                    return new Range[] { new Range(From, range.From), new Range(range.To, To) };
+                }
             }
         }
     }
