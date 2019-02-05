@@ -10,7 +10,11 @@ namespace Vector
     {
         static void Main(string[] args)
         {
-            Console.WriteLine("Hello, world!");
+            int[] array = new int [ ] {1,2,3,4,5 };
+
+            int [] arrayCopy = new int[] { };
+            array[0] = 5;
+            Console.WriteLine(arrayCopy[0]);
             Console.ReadKey();
         }
     }

@@ -4,9 +4,9 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace Shapes
+namespace Shapes.Shapes
 {
-    class Circle : IShapes
+    class Circle : IShape
     {
         public double Radius { get; set; }
 
@@ -57,10 +57,7 @@ namespace Shapes
 
         public override int GetHashCode()
         {
-            int prime = 19;
-            int hash = 1;
-            hash = prime * hash + Radius.GetHashCode();
-            return hash;
+            return Radius.GetHashCode();
         }
     }
 }

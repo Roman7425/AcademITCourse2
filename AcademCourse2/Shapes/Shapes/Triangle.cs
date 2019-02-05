@@ -4,9 +4,9 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace Shapes
+namespace Shapes.Shapes
 {
-    class Triangle : IShapes
+    class Triangle : IShape
     {
         public double X1 { get; set; }
         public double Y1 { get; set; }
@@ -29,12 +29,12 @@ namespace Shapes
             Y3 = y3;
         }
 
-        private double GetMax(double x1, double x2, double x3)
+        private static double GetMax(double x1, double x2, double x3)
         {
             return Math.Max(x1, Math.Max(x2, x3));
         }
 
-        private double GetMin(double x1, double x2, double x3)
+        private static double GetMin(double x1, double x2, double x3)
         {
             return Math.Min(x1, Math.Min(x2, x3));
         }
@@ -49,11 +49,16 @@ namespace Shapes
             return GetMax(Y1, Y2, Y3) - GetMin(Y1, Y2, Y3);
         }
 
+        private static double GetSizeLength(double X1, double Y1, double X2, double Y2)
+        {
+            return Math.Sqrt(Math.Pow(X2 - X1, 2) + Math.Pow(Y2 - Y1, 2));
+        }
+
         public double GetArea()
         {
-            double lengthAB = Math.Sqrt(Math.Pow(X2 - X1, 2) + Math.Pow(Y2 - Y1, 2));
-            double lengthAC = Math.Sqrt(Math.Pow(X3 - X1, 2) + Math.Pow(Y3 - Y1, 2));
-            double lengthBC = Math.Sqrt(Math.Pow(X3 - X2, 2) + Math.Pow(Y3 - Y2, 2));
+            double lengthAB = GetSizeLength(X1, Y1, X2, Y2);
+            double lengthAC = GetSizeLength(X1, Y1, X3, Y3);
+            double lengthBC = GetSizeLength(X2, Y2, X3, Y3);
             double halfPerimeter = (lengthAB + lengthAC + lengthBC) / 2;
 
             return Math.Sqrt(halfPerimeter * (halfPerimeter - lengthAB) * (halfPerimeter - lengthAC) * (halfPerimeter - lengthBC));
@@ -61,9 +66,9 @@ namespace Shapes
 
         public double GetPerimeter()
         {
-            double lengthAB = Math.Sqrt(Math.Pow(X2 - X1, 2) + Math.Pow(Y2 - Y1, 2));
-            double lengthAC = Math.Sqrt(Math.Pow(X3 - X1, 2) + Math.Pow(Y3 - Y1, 2));
-            double lengthBC = Math.Sqrt(Math.Pow(X3 - X2, 2) + Math.Pow(Y3 - Y2, 2));
+            double lengthAB = GetSizeLength(X1, Y1, X2, Y2);
+            double lengthAC = GetSizeLength(X1, Y1, X3, Y3);
+            double lengthBC = GetSizeLength(X2, Y2, X3, Y3);
 
             return lengthAB + lengthAC + lengthBC;
         }

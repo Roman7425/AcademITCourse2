@@ -4,9 +4,9 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace Shapes
+namespace Shapes.Shapes
 {
-    class Square : IShapes
+    class Square : IShape
     {
         public double SideLength { get; set; }
 
@@ -57,10 +57,7 @@ namespace Shapes
 
         public override int GetHashCode()
         {
-            int prime = 24;
-            int hash = 1;
-            hash = prime * hash + SideLength.GetHashCode();
-            return hash;
+            return SideLength.GetHashCode();
         }
     }
 }

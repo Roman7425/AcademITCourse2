@@ -4,9 +4,9 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace Shapes
+namespace Shapes.Shapes
 {
-    public interface IShapes
+    public interface IShape
     {
         double GetWidth();
         double GetHeight();

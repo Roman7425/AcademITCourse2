@@ -4,9 +4,9 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace Shapes
+namespace Shapes.Shapes
 {
-    class Rectangle : IShapes
+    class Rectangle : IShape
     {
         public double FirstSideLength { get; set; }
         public double SecondSideLength { get; set; }
