@@ -26,7 +26,7 @@ namespace Vector
             vector1.SubtractVector(vector3);
             Console.WriteLine($"Вычитание вектора3 из измененного вектора1 = {vector1.ToString()}");
 
-            vector4.MultipliedByNumber(5);
+            vector4.MultiplyByNumber(5);
             Console.WriteLine($"Умножение вектора4 на скаляр 5 = {vector4.ToString()}");
 
             vector2.Turn();
@@ -34,13 +34,13 @@ namespace Vector
 
             Console.WriteLine($"Модуль измененного вектора3 = {vector3.GetLength()}");
 
-            Console.WriteLine($"Компонент вектора4 под индексом - 3 = {vector4.GetElement(3)}");
+            Console.WriteLine($"Компонент вектора4 под индексом - 3 = {vector4.GetComponent(3)}");
 
-            Console.WriteLine($"Сложение вектора1 и вектора3 = {Vector.AdditionTwoVectors(vector1, vector3).ToString()}");
+            Console.WriteLine($"Сложение вектора1 и вектора3 = {Vector.AddTwoVectors(vector1, vector3).ToString()}");
 
-            Console.WriteLine($"Вычитание из вектора1 вектора3 = {Vector.SubtractionTwoVectors(vector1, vector3).ToString()}");
+            Console.WriteLine($"Вычитание из вектора1 вектора3 = {Vector.SubtractTwoVectors(vector1, vector3).ToString()}");
 
-            Console.WriteLine($"Скалярное произведение вектора3 и вектора4 = {Vector.ScalarMultiplicationTwoVectors(vector3, vector4).ToString()}");
+            Console.WriteLine($"Скалярное произведение вектора3 и вектора4 = {Vector.GetScalarMultiplicationTwoVectors(vector3, vector4).ToString()}");
 
             Console.WriteLine($"Сравнивание вектора4 с вектором2 - {vector4.Equals(vector2)}");
 
