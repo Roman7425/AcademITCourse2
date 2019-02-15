@@ -10,29 +10,33 @@ namespace Vector
     {
         public double[] components;
 
-        public Vector(int newArrayLength)
+        public Vector(int newVectorsLength)
         {
-            if (newArrayLength <= 0)
+            if (newVectorsLength <= 0)
             {
                 throw new ArgumentException("Количество компонент вектора должно быть больше нуля.");
             }
-            components = new double[newArrayLength];
+            components = new double[newVectorsLength];
         }
 
-        public Vector(double[] array)
+        public Vector(double[] newVectorsComponents)
         {
-            if (array.Length == 0)
+            if (newVectorsComponents.Length == 0)
             {
                 throw new ArgumentException("Количество компонент вектора должно быть больше нуля.");
             }
-            components = new double[array.Length];
-            Array.Copy(array, components, array.Length);
+            components = new double[newVectorsComponents.Length];
+            Array.Copy(newVectorsComponents, components, newVectorsComponents.Length);
         }
 
-        public Vector(int newArrayLength, double[] array)
+        public Vector(int newVectorsLength, double[] newVectorsComponents)
         {
-            components = new double[newArrayLength];
-            Array.Copy(array, components, array.Length);
+            if (newVectorsComponents.Length == 0)
+            {
+                throw new ArgumentException("Количество компонент вектора должно быть больше нуля.");
+            }
+            components = new double[newVectorsLength];
+            Array.Copy(newVectorsComponents, components, newVectorsComponents.Length);
         }
 
         public Vector(Vector cloneVector)
@@ -53,12 +57,8 @@ namespace Vector
                 Array.Resize(ref components, vector.components.Length);
             }
 
-            for (int i = 0; i < Math.Max(components.Length, vector.components.Length); i++)
+            for (int i = 0; i < vector.components.Length; i++)
             {
-                if (i >= vector.components.Length)
-                {
-                    break;
-                }
                 components[i] += vector.components[i];
             }
         }
@@ -70,12 +70,8 @@ namespace Vector
                 Array.Resize(ref components, vector.components.Length);
             }
 
-            for (int i = 0; i < Math.Max(components.Length, vector.components.Length); i++)
+            for (int i = 0; i < vector.components.Length; i++)
             {
-                if (i >= vector.components.Length)
-                {
-                    break;
-                }
                 components[i] -= vector.components[i];
             }
         }

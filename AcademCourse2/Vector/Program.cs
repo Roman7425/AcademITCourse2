@@ -20,7 +20,7 @@ namespace Vector
 
             Console.WriteLine($"Размерность вектора2 = {vector2.GetSize()}");
 
-            vector1.AddVector(vector3);
+            vector1.AddVector(vector4);
             Console.WriteLine($"Прибавление вектора1 к вектору3 = {vector1.ToString()}");
 
             vector1.SubtractVector(vector3);
