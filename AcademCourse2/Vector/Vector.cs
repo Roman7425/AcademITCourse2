@@ -8,35 +8,35 @@ namespace Vector
 {
     class Vector
     {
-        public double[] components;
+        private double[] components;
 
-        public Vector(int newVectorsLength)
+        public Vector(int length)
         {
-            if (newVectorsLength <= 0)
+            if (length <= 0)
             {
                 throw new ArgumentException("Количество компонент вектора должно быть больше нуля.");
             }
-            components = new double[newVectorsLength];
+            components = new double[length];
         }
 
-        public Vector(double[] newVectorsComponents)
+        public Vector(double[] components)
         {
-            if (newVectorsComponents.Length == 0)
+            if (components.Length == 0)
             {
                 throw new ArgumentException("Количество компонент вектора должно быть больше нуля.");
             }
-            components = new double[newVectorsComponents.Length];
-            Array.Copy(newVectorsComponents, components, newVectorsComponents.Length);
+            this.components = new double[components.Length];
+            Array.Copy(components, this.components, components.Length);
         }
 
-        public Vector(int newVectorsLength, double[] newVectorsComponents)
+        public Vector(int length, double[] newComponents)
         {
-            if (newVectorsComponents.Length == 0)
+            if (length <= 0)
             {
                 throw new ArgumentException("Количество компонент вектора должно быть больше нуля.");
             }
-            components = new double[newVectorsLength];
-            Array.Copy(newVectorsComponents, components, newVectorsComponents.Length);
+            components = new double[length];
+            Array.Copy(newComponents, components, Math.Min(length, newComponents.Length));
         }
 
         public Vector(Vector cloneVector)
@@ -104,26 +104,26 @@ namespace Vector
             return components[index];
         }
 
-        public void SetComponentByIndex(int index, double newComponent)
+        public void SetComponent(int index, double newComponent)
         {
             components[index] = newComponent;
         }
 
-        public static Vector AddTwoVectors(Vector vector1, Vector vector2)
+        public static Vector Add(Vector vector1, Vector vector2)
         {
             Vector newVector = new Vector(vector1);
             newVector.AddVector(vector2);
             return newVector;
         }
 
-        public static Vector SubtractTwoVectors(Vector vector1, Vector vector2)
+        public static Vector Subtract(Vector vector1, Vector vector2)
         {
             Vector newVector = new Vector(vector1);
             newVector.SubtractVector(vector2);
             return newVector;
         }
 
-        public static double GetScalarMultiplicationTwoVectors(Vector vector1, Vector vector2)
+        public static double GetScalarMultiplication(Vector vector1, Vector vector2)
         {
             int minArraysLength = Math.Min(vector1.GetSize(), vector2.GetSize());
             double scalar = 0;

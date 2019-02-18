@@ -36,11 +36,11 @@ namespace Vector
 
             Console.WriteLine($"Компонент вектора4 под индексом - 3 = {vector4.GetComponent(3)}");
 
-            Console.WriteLine($"Сложение вектора1 и вектора3 = {Vector.AddTwoVectors(vector1, vector3).ToString()}");
+            Console.WriteLine($"Сложение вектора1 и вектора3 = {Vector.Add(vector1, vector3).ToString()}");
 
-            Console.WriteLine($"Вычитание из вектора1 вектора3 = {Vector.SubtractTwoVectors(vector1, vector3).ToString()}");
+            Console.WriteLine($"Вычитание из вектора1 вектора3 = {Vector.Subtract(vector1, vector3).ToString()}");
 
-            Console.WriteLine($"Скалярное произведение вектора3 и вектора4 = {Vector.GetScalarMultiplicationTwoVectors(vector3, vector4).ToString()}");
+            Console.WriteLine($"Скалярное произведение вектора3 и вектора4 = {Vector.GetScalarMultiplication(vector3, vector4).ToString()}");
 
             Console.WriteLine($"Сравнивание вектора4 с вектором2 - {vector4.Equals(vector2)}");
 
