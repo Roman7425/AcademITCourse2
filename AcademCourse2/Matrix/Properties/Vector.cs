@@ -130,7 +130,7 @@ namespace VectorGubkin
 
             for (int i = 0; i < minArraysLength; i++)
             {
-                scalar += vector1.components[i] * vector1.components[i];
+                scalar += vector1.components[i] * vector2.components[i];
             }
 
             return scalar;

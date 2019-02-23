@@ -11,42 +11,38 @@ namespace Matrix
     {
         static void Main(string[] args)
         {
-            double[,] array = new double[,] { {1,2 },{1,2 },{1,2 },{1,2 } };
-            double[] array1 = new double [] {1, 2, 3 ,4};
-            double[] array2 = new double[] { 12, 22, 33, 2 };
-            double[] array3 = new double[] { -5,72, 43, 4 };
-            double[] array4 = new double[] { 12, 2, 33, 4, };
-            //double[] array5 = new double[] { 1, 21, 3, 42, 5, 1 };
-            //double[] array6 = new double[] { 12, 2, 34, 4, 51, 5 };
-            //double[] array2 = new double[] { 1, 2, 3 };
-            Vector[] vectors = new Vector[] { new Vector(array1),new Vector(array2), new Vector(array3),
-                new Vector(array4) };
+            double[] array1 = new double[] { 1, 2, 1 };
+            Vector vector1 = new Vector(array1);
 
-            vectors[0].SetComponent(0,5);
-            Console.WriteLine(vectors[0]);
-            Matrix matrix = new Matrix(vectors);
-            //Console.WriteLine(matrix.GetCountString());
-            //Console.WriteLine(matrix.GetCountColumn());
+            double[] array2 = new double[] { 0, 1, 2 };
+            Vector vector2 = new Vector(array2);
+
+            double[] array6 = new double[] { 0, 1, 23 };
+            Vector vector6 = new Vector(array6);
+
+            Vector[] vectors1 = new Vector[] { vector1, vector2 };
+
+            double[] array3 = new double[] { 1, 0 };
+            Vector vector3 = new Vector(array3);
+
+            double[] array4 = new double[] { 0, 1 };
+            Vector vector4 = new Vector(array4);
+
+            double[] array5 = new double[] { 1, 1 };
+            Vector vector5 = new Vector(array5);
+
+            Vector[] vectors2 = new Vector[] { vector3, vector4, vector5 };
+
+            Matrix matrix1 = new Matrix(vectors1);
+            Matrix matrix2 = new Matrix(vectors2);
+
+            Console.WriteLine(Matrix.Multiply(matrix2, matrix1));
+
+
+
+            Vector[] vectors3 = new Vector[] { vector1, vector2, vector6 };
+            Matrix matrix = new Matrix(vectors3);
             Console.WriteLine(matrix.GetDeterminator());
-
-            //Console.WriteLine(matrix.GetColumn(5));
-            //matrix.Transpose();
-            //Console.WriteLine(matrix);
-            //matrix.MultiplyByNumber(2);
-            //Console.WriteLine(matrix);
-            //Console.WriteLine(matrix.GetCountString());
-            //Console.WriteLine(matrix.GetCountColumn());
-            //Matrix matrix = new Matrix(vectors);
-            //Console.WriteLine(matrix);
-            //Matrix matrix1 = new Matrix(matrix);
-            //Console.WriteLine(matrix1);
-            //Matrix matrix0 = new Matrix(3,3);
-            //Console.WriteLine(matrix0);
-
-
-            //Console.WriteLine(array.Length / (array.GetUpperBound(0) + 1));
-            //Console.WriteLine(array.Length);
-            //Console.WriteLine(array.GetUpperBound(0) + 1);
             Console.ReadKey();
         }
     }

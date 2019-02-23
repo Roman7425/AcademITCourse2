@@ -9,7 +9,7 @@ namespace Matrix
 {
     class Matrix
     {
-        private Vector [] components;
+        private Vector[] components;
 
         public Matrix(int n, int m)
         {
@@ -25,7 +25,11 @@ namespace Matrix
         public Matrix(Matrix matrix)
         {
             components = new Vector[matrix.components.Length];
-            Array.Copy(matrix.components,components,matrix.components.Length);
+
+            for (int i = 0; i < matrix.components.Length; i++)
+            {
+                components[i] = new Vector(matrix.components[i]);
+            }
         }
 
         public Matrix(double[,] newComponents)
@@ -36,9 +40,10 @@ namespace Matrix
             for (int i = 0; i < newComponents.GetUpperBound(0) + 1; i++)
             {
                 double[] array = new double[countComponents];
+
                 for (int j = 0; j < countComponents; j++)
                 {
-                    array[j] = newComponents[i,j];
+                    array[j] = newComponents[i, j];
                 }
                 components[i] = new Vector(array);
             }
@@ -123,9 +128,9 @@ namespace Matrix
             }
         }
 
-        private static Matrix GetMinor (Matrix matrix,int n)
+        private static Matrix GetMinor(Matrix matrix, int n)
         {
-            Matrix minor = new Matrix(matrix.GetCountString() - 1,matrix.GetCountColumn() - 1);
+            Matrix minor = new Matrix(matrix.GetCountString() - 1, matrix.GetCountColumn() - 1);
             for (int i = 1; i < matrix.components.GetLength(0); i++)
             {
                 minor.components[i - 1] = new Vector(matrix.components[0].GetSize() - 1);
@@ -144,9 +149,14 @@ namespace Matrix
 
         public double GetDeterminator()
         {
+            if (GetCountColumn() != GetCountString())
+            {
+                throw new ArgumentException("Матрица должна быть квадратной!");
+            }
+
             if (GetCountColumn() == 2 && GetCountString() == 2)
             {
-                return components[0].GetComponent(0) * components[1].GetComponent(1) - 
+                return components[0].GetComponent(0) * components[1].GetComponent(1) -
                     components[0].GetComponent(1) * components[1].GetComponent(0);
             }
 
@@ -166,6 +176,107 @@ namespace Matrix
             }
 
             return determinator;
+        }
+
+        public void MultiplyByVector(Vector vector)
+        {
+            if (GetCountColumn() != 1)
+            {
+                throw new ArgumentException("Матрица должна быть матрицей - столбцом!");
+            }
+            else if (GetCountString() != vector.GetSize())
+            {
+                throw new ArgumentException("Количество строк матрицы должно совпадать с количеством компонентов вектора!");
+            }
+
+            for (int i = 0; i < GetCountString(); i++)
+            {
+                Vector newVector = new Vector(GetCountString());
+                for (int j = 0; j < vector.GetSize(); j++)
+                {
+                    newVector.SetComponent(j, components[i].GetComponent(0) * vector.GetComponent(j));
+                }
+                SetString(i, newVector);
+            }
+        }
+
+        public void AddMatrix(Matrix matrix)
+        {
+            if (GetCountColumn() != matrix.GetCountColumn() || GetCountString() != matrix.GetCountString())
+            {
+                throw new ArgumentException("Матрицы должны быть одинакового размера!");
+            }
+
+            if (GetCountString() != matrix.GetCountString() || GetCountColumn() != matrix.GetCountColumn())
+            {
+                throw new ArgumentException("Размерность матриц должна быт одинакова!");
+            }
+
+            for (int i = 0; i < GetCountString(); i++)
+            {
+                for (int j = 0; j < GetCountColumn(); j++)
+                {
+                    components[i].SetComponent(j, components[i].GetComponent(j) + matrix.components[i].GetComponent(j));
+                }
+            }
+        }
+
+        public void SubtractMatrix(Matrix matrix)
+        {
+            if (GetCountColumn() != matrix.GetCountColumn() || GetCountString() != matrix.GetCountString())
+            {
+                throw new ArgumentException("Матрицы должны быть одинакового размера!");
+            }
+
+            if (GetCountString() != matrix.GetCountString() || GetCountColumn() != matrix.GetCountColumn())
+            {
+                throw new ArgumentException("Размерность матриц должна быт одинакова!");
+            }
+
+            for (int i = 0; i < GetCountString(); i++)
+            {
+                for (int j = 0; j < GetCountColumn(); j++)
+                {
+                    components[i].SetComponent(j, components[i].GetComponent(j) - matrix.components[i].GetComponent(j));
+                }
+            }
+        }
+
+        public static Matrix Add(Matrix matrix1, Matrix matrix2)
+        {
+            Matrix newMatrix = new Matrix(matrix1);
+            newMatrix.AddMatrix(matrix2);
+            return newMatrix;
+        }
+
+        public static Matrix Subtract(Matrix matrix1, Matrix matrix2)
+        {
+            Matrix newMatrix = new Matrix(matrix1);
+            newMatrix.SubtractMatrix(matrix2);
+            return newMatrix;
+        }
+
+        public static Matrix Multiply(Matrix matrix1, Matrix matrix2)
+        {
+            if (matrix1.GetCountColumn() != matrix2.GetCountString())
+            {
+                throw new ArgumentException("Количество столбцов первой матрицы должно совпадать с количеством строк второй матрицы!");
+            }
+
+            Matrix newMatrix = new Matrix(matrix1.GetCountString(), matrix2.GetCountColumn());
+
+            for (int i = 0; i < matrix1.GetCountString(); i++)
+            {
+                Vector vector = new Vector(matrix2.GetCountColumn());
+                for (int j = 0; j < matrix2.GetCountColumn(); j++)
+                {
+                    vector.SetComponent(j, Vector.GetScalarMultiplication(matrix1.GetString(i), matrix2.GetColumn(j)));
+                }
+
+                newMatrix.SetString(i, vector);
+            }
+
+            return newMatrix;
         }
 
         public override string ToString()
