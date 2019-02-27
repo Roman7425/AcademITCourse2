@@ -36,13 +36,20 @@ namespace Matrix
             Matrix matrix1 = new Matrix(vectors1);
             Matrix matrix2 = new Matrix(vectors2);
 
-            Console.WriteLine(Matrix.Multiply(matrix2, matrix1));
 
 
-
+            
+            
             Vector[] vectors3 = new Vector[] { vector1, vector2, vector6 };
             Matrix matrix = new Matrix(vectors3);
-            Console.WriteLine(matrix.GetDeterminator());
+
+            
+            matrix.Transpose();
+
+            double[,] doubleArray = new double[,] { { 1, 2 }, { 1, 2 }, { 3, 4 } };
+
+            Matrix mat = new Matrix(doubleArray);
+            Console.WriteLine(mat);
             Console.ReadKey();
         }
     }

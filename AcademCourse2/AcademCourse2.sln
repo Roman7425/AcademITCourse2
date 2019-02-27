@@ -11,6 +11,8 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Shapes", "Shapes\Shapes.csp
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Matrix", "Matrix\Matrix.csproj", "{B0D38E9E-48EE-4D2D-81AB-98BF88B62E8F}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "List", "List\List.csproj", "{3A919F2E-E626-4263-8E47-E67D300CF2CC}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -33,6 +35,10 @@ Global
 		{B0D38E9E-48EE-4D2D-81AB-98BF88B62E8F}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{B0D38E9E-48EE-4D2D-81AB-98BF88B62E8F}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{B0D38E9E-48EE-4D2D-81AB-98BF88B62E8F}.Release|Any CPU.Build.0 = Release|Any CPU
+		{3A919F2E-E626-4263-8E47-E67D300CF2CC}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{3A919F2E-E626-4263-8E47-E67D300CF2CC}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{3A919F2E-E626-4263-8E47-E67D300CF2CC}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{3A919F2E-E626-4263-8E47-E67D300CF2CC}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
