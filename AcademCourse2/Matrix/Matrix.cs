@@ -43,14 +43,13 @@ namespace Matrix
                 throw new ArgumentException("Длинна массива не должна быть = 0");
             }
 
-            int componentsCount = newComponents.Length / (newComponents.GetLength(0));
             rows = new Vector[newComponents.GetLength(0)];
 
             for (int i = 0; i < newComponents.GetLength(0); i++)
             {
-                double[] array = new double[componentsCount];
+                double[] array = new double[newComponents.GetLength(1)];
 
-                for (int j = 0; j < componentsCount; j++)
+                for (int j = 0; j < newComponents.GetLength(1); j++)
                 {
                     array[j] = newComponents[i, j];
                 }
@@ -101,7 +100,7 @@ namespace Matrix
         {
             if (index < 0 || index >= GetRowsCount())
             {
-                throw new IndexOutOfRangeException();
+                throw new IndexOutOfRangeException("Нет строки под таким индексом");
             }
 
             return new Vector(rows[index]);
@@ -111,18 +110,12 @@ namespace Matrix
         {
             if (index < 0 || index >= GetRowsCount())
             {
-                throw new IndexOutOfRangeException();
+                throw new IndexOutOfRangeException("Нет строки под таким индексом");
             }
 
-            if (vector.GetSize() < GetColumnsCount() || vector.GetSize() > GetColumnsCount())
+            if (vector.GetSize() != GetColumnsCount())
             {
-                double[] components = new double[GetColumnsCount()];
-                for (int i = 0; i < Math.Min(vector.GetSize(), GetColumnsCount()); i++)
-                {
-                    components[i] = vector.GetComponent(i);
-                }
-
-                vector = new Vector(components);
+                throw new IndexOutOfRangeException("размерность вектора должна совпадать с размерностью векторов в матрице");
             }
 
             rows[index] = new Vector(vector);
@@ -132,7 +125,7 @@ namespace Matrix
         {
             if (index < 0 || index >= GetColumnsCount())
             {
-                throw new IndexOutOfRangeException();
+                throw new IndexOutOfRangeException("Нет столбца под таким индексом");
             }
 
             double[] column = new double[GetRowsCount()];
@@ -153,7 +146,6 @@ namespace Matrix
             }
 
             rows = array;
-
         }
 
         public void MultiplyByNumber(double number)
@@ -214,26 +206,21 @@ namespace Matrix
             return determinator;
         }
 
-        public Matrix MultiplyByVector(Vector vector)
+        public Vector MultiplyByVector(Vector vector)
         {
             if (GetColumnsCount() != vector.GetSize())
             {
                 throw new ArgumentException("Количество столбцов матрицы должно совпадать с количеством компонентов вектора!");
             }
 
-            Matrix resultMatrix = new Matrix(vector.GetSize(), 1);
+            double[] resultComponents = new double[GetRowsCount()];
 
-            for (int i = 0; i < resultMatrix.GetRowsCount(); i++)
+            for (int i = 0; i < GetRowsCount(); i++)
             {
-                double[] resultComponents = new double[1];
-                for (int j = 0; j < vector.GetSize(); j++)
-                {
-                    resultComponents[0] += GetRow(i).GetComponent(j) * vector.GetComponent(j);
-                }
-                resultMatrix.rows[i] = new Vector(resultComponents);
+                resultComponents[i] = Vector.GetScalarMultiplication(GetRow(i), vector);
             }
 
-            return resultMatrix;
+            return new Vector(resultComponents);
         }
 
         public void AddMatrix(Matrix matrix)

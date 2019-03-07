@@ -22,7 +22,7 @@ namespace Matrix
 
             Vector[] vectors1 = new Vector[] { vector1, vector2 };
 
-            double[] array3 = new double[] { 5,1 };
+            double[] array3 = new double[] { 5,1,3,5 };
             Vector vector3 = new Vector(array3);
 
             double[] array4 = new double[] { 0, 1};
@@ -43,7 +43,9 @@ namespace Matrix
             Vector[] vectors3 = new Vector[] { vector1, vector2, vector6 };
             Matrix matrix = new Matrix(vectors3);
 
-            Console.WriteLine(matrix);
+            Console.WriteLine(matrix.MultiplyByVector(vector3));
+
+            
             Console.ReadKey();
         }
     }
