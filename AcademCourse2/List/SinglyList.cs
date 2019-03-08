@@ -9,7 +9,7 @@ namespace List
     class SinglyList<T>
     {
         public Note<T> Head { get; set; }
-        private int count;
+        private int count = 0;
 
         public SinglyList(Note<T> head)
         {

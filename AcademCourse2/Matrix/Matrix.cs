@@ -115,7 +115,7 @@ namespace Matrix
 
             if (vector.GetSize() != GetColumnsCount())
             {
-                throw new IndexOutOfRangeException("размерность вектора должна совпадать с размерностью векторов в матрице");
+                throw new ArgumentException("размерность вектора должна совпадать с размерностью векторов в матрице");
             }
 
             rows[index] = new Vector(vector);
@@ -217,7 +217,7 @@ namespace Matrix
 
             for (int i = 0; i < GetRowsCount(); i++)
             {
-                resultComponents[i] = Vector.GetScalarMultiplication(GetRow(i), vector);
+                resultComponents[i] = Vector.GetScalarMultiplication(rows[i], vector);
             }
 
             return new Vector(resultComponents);
