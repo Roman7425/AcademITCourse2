@@ -16,10 +16,10 @@ namespace List
             Data = data;
         }
 
-        public Note (T data, Note<T> next)
+        public Note(T data, Note<T> next)
         {
             Data = data;
             Next = next;
-        }            
+        }
     }
 }

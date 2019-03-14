@@ -14,12 +14,17 @@ namespace List
             SinglyList<int> number = new SinglyList<int>();
             number.Add(5);
             number.Add(6);
-            number.Add(5);
-            number.Add(6);
+            number.Add(3);
+            number.Add(1);
 
-            Console.WriteLine(number.DeleteNote(3));
+
+            
             Console.WriteLine(number);
-            Console.WriteLine(number.GetCount());
+            number.Turn();
+            SinglyList<int> numberClone = new SinglyList<int>(number);
+            Console.WriteLine(numberClone);
+            Console.WriteLine(numberClone.GetFirstValue());
+            Console.WriteLine(numberClone.GetCount());
             Console.ReadLine();
         }
     }
