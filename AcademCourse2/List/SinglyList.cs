@@ -8,189 +8,166 @@ namespace List
 {
     class SinglyList<T>
     {
-        private Note<T> Head { get; set; }
-        private int notesCount = 0;
+        private Node<T> Head { get; set; }
+        public int NodesCount { private set; get; }
 
         public SinglyList()
         { }
 
-        public SinglyList(Note<T> head)
+        public SinglyList(T value)
         {
-            Head = head;
-            for (Note<T> p = Head; p != null; p = p.Next)
-            {
-                notesCount++;
-            }
+            Head = new Node<T>(value);
+            NodesCount++;
         }
 
         public SinglyList(SinglyList<T> list)
         {
-            for (Note<T> p = list.Head; p != null; p = p.Next)
+            Head = list.Head;
+            for (Node<T> p = list.Head.Next, d = Head.Next; p != null; p = p.Next, d = d.Next)
             {
-                Add(p.Data);
+                d = new Node<T>(p.Data);
             }
-        }
-
-        public int GetCount()
-        {
-            return notesCount;
+            NodesCount = list.NodesCount;
         }
 
         public T GetFirstValue()
         {
+            if (NodesCount == 0)
+            {
+                throw new Exception("Список пустой.");
+            }
             return Head.Data;
         }
 
         public T GetValue(int index)
         {
-            if (index < 0 || index >= GetCount())
+            if (index < 0 || index >= NodesCount)
             {
                 throw new IndexOutOfRangeException("Нет узла под таким индексом!");
             }
 
-            T result = Head.Data;
-            int i = 0;
-            for (Note<T> p = Head; p != null; p = p.Next)
-            {
-                if (i == index)
-                {
-                    result = p.Data;
-                }
-                i++;
-            }
-            return result;
+            return GetNode(index).Data;
         }
 
         public T SetValue(T value, int index)
         {
-            if (index < 0 || index >= GetCount())
+            if (index < 0 || index >= NodesCount)
             {
                 throw new IndexOutOfRangeException("Нет узла под таким индексом!");
             }
 
-            T temp = Head.Data;
-            int i = 0;
-            for (Note<T> p = Head; p != null; p = p.Next)
-            {
-                if (i == index)
-                {
-                    temp = p.Data;
-                    p.Data = value;
-                }
-                i++;
-            }
+            T temp = GetNode(index).Data;
+            GetNode(index).Data = value;
             return temp;
         }
 
         public T DeleteNote(int index)
         {
-            if (index < 0 || index >= GetCount())
+            if (index < 0 || index >= NodesCount)
             {
                 throw new IndexOutOfRangeException("Нет узла под таким индексом!");
             }
 
-            T temp = Head.Data;
-            int i = 0;
+            T temp = GetNode(index).Data;
             if (index == 0)
             {
                 Head = Head.Next;
             }
+            else if (index == NodesCount - 1)
+            {
+                GetNode(index - 1).Next = null;
+            }
             else
             {
-                for (Note<T> p = Head; p != null; p = p.Next)
-                {
-                    if (i == index - 1)
-                    {
-                        if (p.Next.Next == null)
-                        {
-                            temp = p.Next.Data;
-                            p.Next = null;
-                        }
-                        else
-                        {
-                            temp = p.Next.Data;
-                            p.Next = p.Next.Next;
-                        }
-                    }
-                    i++;
-                }
+                GetNode(index - 1).Next = GetNode(index).Next;
             }
-            notesCount--;
+            NodesCount--;
             return temp;
         }
 
         public void Add(T value)
         {
-            for (Note<T> p = Head; ; p = p.Next)
+
+            if (Head == null)
             {
-                if (Head == null)
-                {
-                    Note<T> newHead = new Note<T>(value);
-                    Head = newHead;
-                    break;
-                }
-                else if (p.Next == null)
-                {
-                    p.Next = new Note<T>(value);
-                    break;
-                }
+                Node<T> newHead = new Node<T>(value);
+                Head = newHead;
+
             }
-            notesCount++;
+            else
+            {
+                GetNode(NodesCount - 1).Next = new Node<T>(value);
+            }
+            NodesCount++;
         }
 
-        public void AddToTheTop(T value)
+        public void AddTop(T value)
         {
-            Note<T> newNote = new Note<T>(value);
+            Node<T> newNote = new Node<T>(value);
             newNote.Next = Head;
             Head = newNote;
-            notesCount++;
+            NodesCount++;
         }
 
         public void AddOnIndex(T value, int index)
         {
-            if (index < 0 || index > GetCount())
+            if (index < 0 || index > NodesCount)
             {
                 throw new IndexOutOfRangeException("Индекс не должен превышать количество элементов или быть < 0");
             }
 
             if (index == 0)
             {
-                AddToTheTop(value);
+                AddTop(value);
+            }
+            else if (index == NodesCount)
+            {
+                Add(value);
             }
             else
             {
-                int i = 0;
-                Note<T> newNote = new Note<T>(value);
-                for (Note<T> p = Head; p != null; p = p.Next)
-                {
-                    if (i == index - 1)
-                    {
-                        newNote.Next = p.Next;
-                        p.Next = newNote;
-                        break;
-                    }
-                    i++;
-                }
-                notesCount++;
+                Node<T> newNode = new Node<T>(value);
+                newNode.Next = GetNode(index - 1).Next;
+                GetNode(index - 1).Next = newNode;
+                NodesCount++;
             }
         }
 
         public bool IndexOf(T value)
         {
+            if (value == null && Head.Data == null)
+            {
+                Head = Head.Next;
+                NodesCount--;
+                return true;
+            }
             if (Head.Data.Equals(value))
             {
                 Head = Head.Next;
-                notesCount--;
+                NodesCount--;
                 return true;
             }
-            for (Note<T> p = Head; p.Next != null; p = p.Next)
+
+            int i = 0;
+            for (Node<T> p = Head; ; p = p.Next)
             {
+                if (value == null && p.Next.Data == null)
+                {
+                    p.Next = p.Next.Next;
+                    NodesCount--;
+                    return true;
+                }
                 if (p.Next.Data.Equals(value))
                 {
                     p.Next = p.Next.Next;
-                    notesCount--;
+                    NodesCount--;
                     return true;
                 }
+                if (i == NodesCount - 1)
+                {
+                    break;
+                }
+                i++;
             }
             return false;
         }
@@ -204,22 +181,35 @@ namespace List
 
             T term = Head.Data;
             Head = Head.Next;
-            notesCount--;
+            NodesCount--;
             return term;
         }
 
         public void Turn()
         {
-            Note<T> note = Head;
-            Note<T> previous = null;
+            Node<T> node = Head;
+            Node<T> previous = null;
 
-            while (note != null)
+            while (node != null)
             {
-                Note<T> temp = note.Next;
-                note.Next = previous;
-                previous = note;
-                Head = note;
-                note = temp;
+                Node<T> temp = node.Next;
+                node.Next = previous;
+                previous = node;
+                Head = node;
+                node = temp;
+            }
+        }
+
+        private Node<T> GetNode(int index)
+        {
+            int i = 0;
+            for (Node<T> p = Head; ; p = p.Next)
+            {
+                if (i == index)
+                {
+                    return p;
+                }
+                i++;
             }
         }
 
@@ -227,13 +217,27 @@ namespace List
         {
             StringBuilder sb = new StringBuilder();
             sb.Append("{ ");
-            for (Note<T> p = Head; p != null; p = p.Next)
+            int i = 0;
+            for (Node<T> p = Head; ; p = p.Next)
             {
-                sb.Append(p.Data);
-                if (p.Next != null)
+                if (p.Data == null)
+                {
+                    sb.Append("null");
+                }
+                else
+                {
+                    sb.Append(p.Data);
+                }
+
+                if (i != NodesCount - 1)
                 {
                     sb.Append(", ");
                 }
+                else
+                {
+                    break;
+                }
+                i++;
             }
             sb.Append(" }");
             return sb.ToString();

@@ -6,20 +6,14 @@ using System.Threading.Tasks;
 
 namespace List
 {
-    class Note<T>
+    class Node<T>
     {
         public T Data { get; set; }
-        public Note<T> Next { get; set; }
+        public Node<T> Next { get; set; }
 
-        public Note(T data)
+        public Node(T data)
         {
             Data = data;
-        }
-
-        public Note(T data, Note<T> next)
-        {
-            Data = data;
-            Next = next;
         }
     }
 }
