@@ -17,34 +17,27 @@ namespace List
             number.Add(3);
             number.Add(1);
 
+            SinglyList<int> number1 = new SinglyList<int>(number);
 
-
+            //number.AddOnIndex(0,1);
             //Console.WriteLine(number);
-            //number.AddOnIndex(9, 4);
-            //number.Add(10);
-            //Console.WriteLine(number);
-            //Console.WriteLine(number.NodesCount);
+            //Console.WriteLine(number.Count);
 
-            //Console.WriteLine(number.DeleteNote(1));
-            //Console.WriteLine(number);
-            //Console.WriteLine(number.NodesCount);
 
-            SinglyList<string> name = new SinglyList<string>("Roma");
-            //Console.WriteLine(name);
+            SinglyList<string> name = new SinglyList<string>();
+            name.Add("Roma");
             name.Add(null);
-            //Console.WriteLine(name);
-            name.Add("Stas");
+            name.Add("Roma");
             name.AddTop(null);
-            //Console.WriteLine(name);
-            //Console.WriteLine(name.DeleteFirstNote());
-            Console.WriteLine(name);
 
             SinglyList<string> nameClone = new SinglyList<string>(name);
-            nameClone.Add("Andry");
-            Console.WriteLine(nameClone);
-            Console.WriteLine(nameClone.NodesCount);
-            Console.WriteLine(nameClone.DeleteNote(0));
 
+            Console.WriteLine(name);
+            Console.WriteLine(nameClone);
+
+            nameClone.DeleteFirstNode();
+            Console.WriteLine(nameClone);
+            Console.WriteLine(name);
             Console.ReadLine();
         }
     }

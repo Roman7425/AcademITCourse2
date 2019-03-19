@@ -9,7 +9,7 @@ namespace List
     class SinglyList<T>
     {
         private Node<T> Head { get; set; }
-        public int NodesCount { private set; get; }
+        public int Count { private set; get; }
 
         public SinglyList()
         { }
@@ -17,22 +17,26 @@ namespace List
         public SinglyList(T value)
         {
             Head = new Node<T>(value);
-            NodesCount++;
+            Count++;
         }
 
         public SinglyList(SinglyList<T> list)
         {
-            Head = list.Head;
-            for (Node<T> p = list.Head.Next, d = Head.Next; p != null; p = p.Next, d = d.Next)
+            Head = new Node<T>(list.Head.Data);
+            Node<T> newNode = Head;
+            Node<T> listNode = list.Head;
+            while (listNode.Next != null)
             {
-                d = new Node<T>(p.Data);
+                listNode = listNode.Next;
+                newNode.Next = new Node<T>(listNode.Data);
+                newNode = newNode.Next;
             }
-            NodesCount = list.NodesCount;
+            Count = list.Count;
         }
 
         public T GetFirstValue()
         {
-            if (NodesCount == 0)
+            if (Count == 0)
             {
                 throw new Exception("Список пустой.");
             }
@@ -41,7 +45,7 @@ namespace List
 
         public T GetValue(int index)
         {
-            if (index < 0 || index >= NodesCount)
+            if (index < 0 || index >= Count)
             {
                 throw new IndexOutOfRangeException("Нет узла под таким индексом!");
             }
@@ -51,67 +55,67 @@ namespace List
 
         public T SetValue(T value, int index)
         {
-            if (index < 0 || index >= NodesCount)
+            if (index < 0 || index >= Count)
             {
                 throw new IndexOutOfRangeException("Нет узла под таким индексом!");
             }
 
-            T temp = GetNode(index).Data;
-            GetNode(index).Data = value;
-            return temp;
+            Node<T> temp = GetNode(index);
+            T valueTemp = temp.Data;
+            temp.Data = value;
+            return valueTemp;
         }
 
-        public T DeleteNote(int index)
+        public T DeleteNode(int index)
         {
-            if (index < 0 || index >= NodesCount)
+            if (index < 0 || index >= Count)
             {
                 throw new IndexOutOfRangeException("Нет узла под таким индексом!");
             }
 
-            T temp = GetNode(index).Data;
+            Node<T> temp = GetNode(index);
+            T valueTemp = temp.Data;
             if (index == 0)
             {
                 Head = Head.Next;
             }
-            else if (index == NodesCount - 1)
+            else if (index == Count - 1)
             {
-                GetNode(index - 1).Next = null;
+                temp = null;
             }
             else
             {
-                GetNode(index - 1).Next = GetNode(index).Next;
+                temp = temp.Next;
             }
-            NodesCount--;
-            return temp;
+            Count--;
+            return valueTemp;
         }
 
         public void Add(T value)
         {
-
             if (Head == null)
             {
                 Node<T> newHead = new Node<T>(value);
                 Head = newHead;
-
             }
             else
             {
-                GetNode(NodesCount - 1).Next = new Node<T>(value);
+                GetNode(Count - 1).Next = new Node<T>(value);
             }
-            NodesCount++;
+            Count++;
         }
 
         public void AddTop(T value)
         {
-            Node<T> newNote = new Node<T>(value);
-            newNote.Next = Head;
-            Head = newNote;
-            NodesCount++;
+            Node<T> newNode = new Node<T>(value);
+            newNode.Next = Head;
+            Head = newNode;
+            Count++;
         }
 
         public void AddOnIndex(T value, int index)
         {
-            if (index < 0 || index > NodesCount)
+            if (index < 0 || index > Count)
             {
                 throw new IndexOutOfRangeException("Индекс не должен превышать количество элементов или быть < 0");
             }
@@ -120,50 +124,43 @@ namespace List
             {
                 AddTop(value);
             }
-            else if (index == NodesCount)
+            else if (index == Count)
             {
                 Add(value);
             }
             else
             {
                 Node<T> newNode = new Node<T>(value);
-                newNode.Next = GetNode(index - 1).Next;
-                GetNode(index - 1).Next = newNode;
-                NodesCount++;
+                Node<T> previous = GetNode(index - 1);
+                newNode.Next = previous.Next;
+                previous.Next = newNode;
+                Count++;
             }
         }
 
-        public bool IndexOf(T value)
+        public bool Remove(T value)
         {
-            if (value == null && Head.Data == null)
+            if (Count == 0)
             {
-                Head = Head.Next;
-                NodesCount--;
-                return true;
+                return false;
             }
-            if (Head.Data.Equals(value))
+            if (Equals(value, Head.Data))
             {
                 Head = Head.Next;
-                NodesCount--;
+                Count--;
                 return true;
             }
 
             int i = 0;
             for (Node<T> p = Head; ; p = p.Next)
             {
-                if (value == null && p.Next.Data == null)
+                if (Equals(value, p.Next.Data))
                 {
                     p.Next = p.Next.Next;
-                    NodesCount--;
+                    Count--;
                     return true;
                 }
-                if (p.Next.Data.Equals(value))
-                {
-                    p.Next = p.Next.Next;
-                    NodesCount--;
-                    return true;
-                }
-                if (i == NodesCount - 1)
+                if (i == Count - 1)
                 {
                     break;
                 }
@@ -172,7 +169,7 @@ namespace List
             return false;
         }
 
-        public T DeleteFirstNote()
+        public T DeleteFirstNode()
         {
             if (Head == null)
             {
@@ -181,7 +178,7 @@ namespace List
 
             T term = Head.Data;
             Head = Head.Next;
-            NodesCount--;
+            Count--;
             return term;
         }
 
@@ -229,7 +226,7 @@ namespace List
                     sb.Append(p.Data);
                 }
 
-                if (i != NodesCount - 1)
+                if (i != Count - 1)
                 {
                     sb.Append(", ");
                 }
