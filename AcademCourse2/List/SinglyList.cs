@@ -80,22 +80,28 @@ namespace List
                 throw new IndexOutOfRangeException("Нет узла под таким индексом!");
             }
 
-            Node<T> temp = GetNode(index - 1);
-            T valueTemp = temp.Next.Data;
             if (index == 0)
             {
+                T temp = Head.Data;
                 Head = Head.Next;
+                return temp;
             }
             else if (index == Count - 1)
             {
+                Node<T> temp = GetNode(index - 1);
+                T valueTemp = temp.Next.Data;
                 temp = null;
+                Count--;
+                return valueTemp;
             }
             else
             {
+                Node<T> temp = GetNode(index - 1);
+                T valueTemp = temp.Next.Data;
                 temp.Next = temp.Next.Next;
+                Count--;
+                return valueTemp;
             }
-            Count--;
-            return valueTemp;
         }
 
         public void Add(T value)

@@ -19,19 +19,22 @@ namespace List
 
             SinglyList<int> number1 = new SinglyList<int>(number);
 
-            //number.AddOnIndex(0,1);
-            //Console.WriteLine(number);
-            //Console.WriteLine(number.Count);
+            Console.WriteLine(number.DeleteNode(3));
+            Console.WriteLine(number);
+            Console.WriteLine(number.Count);
+            Console.WriteLine(number.DeleteNode(2));
+            Console.WriteLine(number);
+            Console.WriteLine(number.Count);
 
 
             SinglyList<string> name = new SinglyList<string>();
             name.Add("Roma");
             name.Add(null);
             name.Add("Roma");
-            name.Add(null);
+            name.Add("Stat");
 
-            Console.WriteLine(name.DeleteNode(1));
-            Console.WriteLine(name);
+            //Console.WriteLine(name.DeleteNode(3));
+            //Console.WriteLine(name);
             Console.ReadLine();
         }
     }
