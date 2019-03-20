@@ -28,15 +28,9 @@ namespace List
             name.Add("Roma");
             name.Add(null);
             name.Add("Roma");
-            name.AddTop(null);
+            name.Add(null);
 
-            SinglyList<string> nameClone = new SinglyList<string>(name);
-
-            Console.WriteLine(name);
-            Console.WriteLine(nameClone);
-
-            nameClone.DeleteFirstNode();
-            Console.WriteLine(nameClone);
+            Console.WriteLine(name.DeleteNode(1));
             Console.WriteLine(name);
             Console.ReadLine();
         }

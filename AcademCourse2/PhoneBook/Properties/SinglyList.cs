@@ -22,23 +22,16 @@ namespace List
 
         public SinglyList(SinglyList<T> list)
         {
-            if (list.Count == 0)
+            Head = new Node<T>(list.Head.Data);
+            Node<T> newNode = Head;
+            Node<T> listNode = list.Head;
+            while (listNode.Next != null)
             {
-                Head = null;
+                listNode = listNode.Next;
+                newNode.Next = new Node<T>(listNode.Data);
+                newNode = newNode.Next;
             }
-            else
-            {
-                Head = new Node<T>(list.Head.Data);
-                Node<T> newNode = Head;
-                Node<T> listNode = list.Head;
-                while (listNode.Next != null)
-                {
-                    listNode = listNode.Next;
-                    newNode.Next = new Node<T>(listNode.Data);
-                    newNode = newNode.Next;
-                }
-                Count = list.Count;
-            }
+            Count = list.Count;
         }
 
         public T GetFirstValue()
@@ -80,8 +73,8 @@ namespace List
                 throw new IndexOutOfRangeException("Нет узла под таким индексом!");
             }
 
-            Node<T> temp = GetNode(index - 1);
-            T valueTemp = temp.Next.Data;
+            Node<T> temp = GetNode(index);
+            T valueTemp = temp.Data;
             if (index == 0)
             {
                 Head = Head.Next;
@@ -92,7 +85,7 @@ namespace List
             }
             else
             {
-                temp.Next = temp.Next.Next;
+                temp = temp.Next;
             }
             Count--;
             return valueTemp;
@@ -215,6 +208,35 @@ namespace List
                 }
                 i++;
             }
+        }
+
+        public Node<T> GetNodeValue(T value)
+        {
+            if (Count == 0)
+            {
+                return null;
+            }
+            if (Equals(value, Head.Data))
+            {
+                Head = Head.Next;
+                return Head;
+            }
+
+            int i = 0;
+            for (Node<T> p = Head; ; p = p.Next)
+            {
+                if (Equals(value, p.Next.Data))
+                {
+                    p.Next = p.Next.Next;
+                    return p.Next;
+                }
+                if (i == Count - 1)
+                {
+                    break;
+                }
+                i++;
+            }
+            return null;
         }
 
         public override string ToString()
