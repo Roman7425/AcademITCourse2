@@ -84,13 +84,14 @@ namespace List
             {
                 T temp = Head.Data;
                 Head = Head.Next;
+                Count--;
                 return temp;
             }
             else if (index == Count - 1)
             {
                 Node<T> temp = GetNode(index - 1);
                 T valueTemp = temp.Next.Data;
-                temp = null;
+                temp.Next = null;
                 Count--;
                 return valueTemp;
             }
