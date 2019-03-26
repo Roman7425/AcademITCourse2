@@ -211,7 +211,7 @@ namespace List
             }
         }
 
-        private Node<T> GetNode(int index)
+        public Node<T> GetNode(int index)
         {
             int i = 0;
             for (Node<T> p = Head; ; p = p.Next)
