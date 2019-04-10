@@ -183,6 +183,24 @@ namespace List
             return false;
         }
 
+        public int IndexOff(T value)
+        {
+            int index = 0;
+            for (Node<T> p = Head; ; p = p.Next)
+            {
+                if (Equals(value, p.Data))
+                {
+                    return index;
+                }
+
+                if (p.Next == null)
+                {
+                    return index;
+                }
+                index++;
+            }
+        }
+
         public T DeleteFirstNode()
         {
             if (Head == null)

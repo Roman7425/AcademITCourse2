@@ -9,15 +9,15 @@ namespace ArrayList
 {
     class List<T> : IList<T>
     {
-        private T[] items = new T[4];
+        private T[] items;
         public int Count { get; private set; }
+        private int modCount = 0;
 
         public int Capacity
         {
             get
             {
                 return items.Length;
-
             }
 
             set
@@ -27,110 +27,93 @@ namespace ArrayList
                     throw new ArgumentOutOfRangeException("Переданно значение меньше элементов списка");
                 }
 
-                T[] old = items;
-                items = new T[value];
-                Array.Copy(old, 0, items, 0, Count);
+                if (value != Count)
+                {
+                    Array.Resize(ref items, value);
+                }
             }
         }
 
         public List()
         {
+            items = new T[4];
         }
 
-        public List(int itemsLength)
+        public List(int capacity)
         {
-            items = new T[itemsLength];
+            items = new T[capacity];
         }
 
         public void Add(T value)
         {
-            if (Count < Capacity)
-            {
-                items[Count] = value;
-                Count++;
-            }
-            else
+            if (Count >= Capacity)
             {
                 Capacity *= 2;
-                items[Count] = value;
-                Count++;
             }
+
+            items[Count] = value;
+            Count++;
+            modCount++;
         }
 
         public bool Contains(T value)
         {
-            bool hasValue = false;
-            for (int i = 0; i < Capacity; i++)
+            if (IndexOf(value) != -1)
             {
-                if (items[i].Equals(value))
-                {
-                    hasValue = true;
-                }
+                return true;
             }
-            return hasValue;
+
+            return false;
         }
 
         public int IndexOf(T value)
         {
-            int index = -1;
-            for (int i = 0; i < Capacity; i++)
+
+            for (int i = 0; i < Count; i++)
             {
-                if (items[i].Equals(value))
+                if (Equals(items[i], value))
                 {
-                    index = i;
-                    break;
+                    return i;
                 }
             }
 
-            return index;
+            return -1;
         }
 
         public void Insert(int index, T value)
         {
             if (index < 0 || index > Count)
             {
-                throw new ArgumentOutOfRangeException("Индекс должен соответствовать индексам существующих элементов");
+                throw new IndexOutOfRangeException("Индекс должен соответствовать индексам существующих элементов");
             }
 
-            if (Count < Capacity)
-            {
-                Count++;
-                for (int i = Count - 1; i > index; i--)
-                {
-                    items[i] = items[i - 1];
-                }
-
-                items[index] = value;
-            }
-            else
+            if (Count >= Capacity)
             {
                 Capacity *= 2;
-
-                Count++;
-                for (int i = Count - 1; i > index; i--)
-                {
-                    items[i] = items[i - 1];
-                }
-
-                items[index] = value;
             }
+
+            Count++;
+
+            T[] old = new T[Count - 1];
+            Array.Copy(items, 0, old, 0, Count - 1);
+            items[index] = value;
+            Array.Copy(old, index, items, index + 1, Count - index - 1);
+
+            modCount++;
         }
 
         public void RemoveAt(int index)
         {
             if (index < 0 || index >= Count)
             {
-                throw new ArgumentOutOfRangeException("Индекс должен соответствовать индексам существующих элементов");
+                throw new IndexOutOfRangeException("Индекс должен соответствовать индексам существующих элементов");
             }
-            else
-            {
-                for (int i = index; i < Count; i++)
-                {
-                    items[i] = items[i + 1];
-                }
 
-                Count--;
-            }
+            T[] old = new T[Count];
+            Array.Copy(items, 0, old, 0, Count);
+            Array.Copy(old, index + 1, items, index, Count - index - 1);
+            Count--;
+            modCount++;
         }
 
         public bool Remove(T value)
@@ -142,7 +125,7 @@ namespace ArrayList
                 RemoveAt(index);
                 wasRemove = true;
             }
-
+            modCount++;
             return wasRemove;
         }
 
@@ -152,7 +135,7 @@ namespace ArrayList
             {
                 if (index < 0 || index >= Count)
                 {
-                    throw new ArgumentOutOfRangeException("Индекс должен соответствовать индексам существующих элементов");
+                    throw new IndexOutOfRangeException("Индекс должен соответствовать индексам существующих элементов");
                 }
 
                 return items[index];
@@ -162,7 +145,7 @@ namespace ArrayList
             {
                 if (index < 0 || index >= Count)
                 {
-                    throw new ArgumentOutOfRangeException("Индекс должен быть > 0 и меньше Count");
+                    throw new IndexOutOfRangeException("Индекс должен быть > 0 и меньше Count");
                 }
 
                 items[index] = value;
@@ -178,31 +161,39 @@ namespace ArrayList
         {
             items = new T[4];
             Count = 0;
+            modCount++;
         }
 
         public void CopyTo(T[] array, int index)
         {
-            if (index < 0 || index >= array.Length)
+            if (array == null)
             {
-                throw new ArgumentOutOfRangeException("Индекс находится вне границ массива");
+                throw new ArgumentNullException("Аргумент не должет быть null");
             }
 
-            int j = index;
-            for (int i = 0; i < Count; i++)
+            if (index < 0 || index >= array.Length)
             {
-                if (j == array.Length)
-                {
-                    break;
-                }
-                array.SetValue(items[i], j);
+                throw new IndexOutOfRangeException("Индекс находится вне границ массива");
+            }
+
+            int j = 0;
+            for (int i = index; i < array.Length; i++)
+            {
+                array[i] = items[j];
                 j++;
             }
         }
 
         public IEnumerator<T> GetEnumerator()
         {
+            int temp = modCount;
             for (int i = 0; i < Count; i++)
             {
+                if (modCount != temp)
+                {
+                    throw new InvalidOperationException("Список менялся за время обхода");
+                }
+
                 yield return items[i];
             }
         }
@@ -211,6 +202,8 @@ namespace ArrayList
         {
             return GetEnumerator();
         }
+
+        public bool IsReadOnly => !((IList<T>)items).IsReadOnly;
 
         public override string ToString()
         {
@@ -229,6 +222,5 @@ namespace ArrayList
             return sb.ToString();
         }
 
-        public bool IsReadOnly => throw new NotImplementedException();
     }
 }

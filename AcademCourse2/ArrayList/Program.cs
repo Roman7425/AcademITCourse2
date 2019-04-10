@@ -16,24 +16,17 @@ namespace ArrayList
             number.Add(6);
             number.Add(7);
             number.Add(8);
-            number.Add(5);
-            number.Add(6);
-            number.Add(7);
-            number.Add(8);
-            number.Add(5);
-            number.Add(6);
-            number.Add(7);
-            number.Add(8);
+
             Console.WriteLine(number);
             Console.WriteLine(number.Count);
             Console.WriteLine(number.Capacity);
-            number.Add(8);
-            number.Add(5);
-            number.Add(6);
-            number.Add(7);
-            number.Add(8);
+
+            number.RemoveAt(3);
+            Console.WriteLine(number);
             Console.WriteLine(number.Count);
             Console.WriteLine(number.Capacity);
+
+            Console.WriteLine(number.IsReadOnly);
             Console.ReadKey();
         }
     }
