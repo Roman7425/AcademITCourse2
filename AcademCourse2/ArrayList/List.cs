@@ -58,12 +58,7 @@ namespace ArrayList
 
         public bool Contains(T value)
         {
-            if (IndexOf(value) != -1)
-            {
-                return true;
-            }
-
-            return false;
+            return IndexOf(value) == -1 ? false : true;
         }
 
         public int IndexOf(T value)
@@ -92,13 +87,10 @@ namespace ArrayList
                 Capacity *= 2;
             }
 
-            Count++;
-
-            T[] old = new T[Count - 1];
-            Array.Copy(items, 0, old, 0, Count - 1);
+            Array.Copy(items, index, items, index + 1, Count - index + 1);
             items[index] = value;
-            Array.Copy(old, index, items, index + 1, Count - index - 1);
 
+            Count++;
             modCount++;
         }
 
@@ -109,24 +101,23 @@ namespace ArrayList
                 throw new IndexOutOfRangeException("Индекс должен соответствовать индексам существующих элементов");
             }
 
-            T[] old = new T[Count];
-            Array.Copy(items, 0, old, 0, Count);
-            Array.Copy(old, index + 1, items, index, Count - index - 1);
+            Array.Copy(items, index + 1, items, index, Count - index - 1);
+
             Count--;
             modCount++;
         }
 
         public bool Remove(T value)
         {
-            bool wasRemove = false;
             int index = IndexOf(value);
+
             if (index != -1)
             {
                 RemoveAt(index);
-                wasRemove = true;
+                return true;
             }
-            modCount++;
-            return wasRemove;
+
+            return false;
         }
 
         public T this[int index]
@@ -176,10 +167,15 @@ namespace ArrayList
                 throw new IndexOutOfRangeException("Индекс находится вне границ массива");
             }
 
-            int j = 0;
-            for (int i = index; i < array.Length; i++)
+            if (items.Length > array.Length - index)
             {
-                array[i] = items[j];
+                throw new ArgumentException("Недостаточно места в массиве");
+            }
+
+            int j = index;
+            for (int i = 0; i < Count; i++)
+            {
+                array[j] = items[i];
                 j++;
             }
         }
@@ -203,7 +199,7 @@ namespace ArrayList
             return GetEnumerator();
         }
 
-        public bool IsReadOnly => !((IList<T>)items).IsReadOnly;
+        public bool IsReadOnly => false;
 
         public override string ToString()
         {

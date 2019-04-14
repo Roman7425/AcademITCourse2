@@ -21,12 +21,14 @@ namespace ArrayList
             Console.WriteLine(number.Count);
             Console.WriteLine(number.Capacity);
 
-            number.RemoveAt(3);
-            Console.WriteLine(number);
-            Console.WriteLine(number.Count);
-            Console.WriteLine(number.Capacity);
+            int[] array = new int[8];
 
-            Console.WriteLine(number.IsReadOnly);
+            number.CopyTo(array,0);
+
+            for (int i = 0; i < array.Length; i++)
+            {
+                Console.Write(array[i] + "  ");
+            }
             Console.ReadKey();
         }
     }
