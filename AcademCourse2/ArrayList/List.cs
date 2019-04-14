@@ -58,7 +58,7 @@ namespace ArrayList
 
         public bool Contains(T value)
         {
-            return IndexOf(value) == -1 ? false : true;
+            return IndexOf(value) != -1;
         }
 
         public int IndexOf(T value)
@@ -167,7 +167,7 @@ namespace ArrayList
                 throw new IndexOutOfRangeException("Индекс находится вне границ массива");
             }
 
-            if (items.Length > array.Length - index)
+            if (Count > array.Length - index)
             {
                 throw new ArgumentException("Недостаточно места в массиве");
             }
