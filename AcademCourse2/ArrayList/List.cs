@@ -87,7 +87,7 @@ namespace ArrayList
                 Capacity *= 2;
             }
 
-            Array.Copy(items, index, items, index + 1, Count - index + 1);
+            Array.Copy(items, index, items, index + 1, Count - index);
             items[index] = value;
 
             Count++;

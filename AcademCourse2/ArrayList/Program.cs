@@ -21,7 +21,10 @@ namespace ArrayList
             Console.WriteLine(number.Count);
             Console.WriteLine(number.Capacity);
 
-            Console.WriteLine(number.Contains(5));
+            number.Insert(4,9);
+            Console.WriteLine(number);
+            Console.WriteLine(number.Count);
+            Console.WriteLine(number.Capacity);
             Console.ReadKey();
         }
     }
