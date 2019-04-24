@@ -61,26 +61,26 @@ namespace HashTable
             return items[index].Remove(value);
         }
 
-        public void CopyTo(T [] array, int index)
+        public void CopyTo(T[] array, int index)
         {
             if (index < 0 || index >= array.Length)
             {
                 throw new IndexOutOfRangeException("Индекс находится вне границ массива");
             }
 
-            if(Count > array.Length - index)
+            if (Count > array.Length - index)
             {
                 throw new ArgumentException("Недостаточно места в массиве");
             }
 
             for (int i = 0; i < items.Length; i++)
             {
-                if(items[i] == null)
+                if (items[i] == null)
                 {
                     continue;
                 }
 
-                items[i].CopyTo(array,index);
+                items[i].CopyTo(array, index);
                 index += items[i].Count;
             }
         }
