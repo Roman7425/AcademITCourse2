@@ -58,6 +58,7 @@ namespace HashTable
         {
             int index = Math.Abs(value.GetHashCode() % items.Length);
             modCount++;
+            Count--;
             return items[index].Remove(value);
         }
 
