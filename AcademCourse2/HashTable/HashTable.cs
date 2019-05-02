@@ -9,7 +9,7 @@ namespace HashTable
 {
     class HashTable<T> : ICollection<T>
     {
-        List<T>[] items;
+        private List<T>[] items;
         public int Count { get; private set; }
         private int modCount = 0;
 
@@ -23,19 +23,26 @@ namespace HashTable
             items = new List<T>[8];
         }
 
+        private int GetIndex(T value)
+        {
+            if(value == null)
+            {
+                return 0;
+            }
+
+            return Math.Abs(value.GetHashCode() % items.Length);
+        }
+
         public void Add(T value)
         {
-            int index = Math.Abs(value.GetHashCode() % items.Length);
+            int index = GetIndex(value);
 
             if (items[index] == null)
             {
                 items[index] = new List<T>();
-                items[index].Add(value);
             }
-            else
-            {
-                items[index].Add(value);
-            }
+
+            items[index].Add(value);
 
             Count++;
             modCount++;
@@ -45,13 +52,14 @@ namespace HashTable
         {
             items = new List<T>[8];
             Count = 0;
+            modCount++;
         }
 
         public bool Contains(T value)
         {
-            int index = Math.Abs(value.GetHashCode() % items.Length);
+            int index = GetIndex(value);
 
-            return items[index].IndexOf(value) != -1;
+            return items[index].Contains(value);
         }
 
         public bool Remove(T value)
@@ -74,15 +82,15 @@ namespace HashTable
                 throw new ArgumentException("Недостаточно места в массиве");
             }
 
-            for (int i = 0; i < items.Length; i++)
+            foreach (List<T> list in items)
             {
-                if (items[i] == null)
+                if(list == null)
                 {
                     continue;
                 }
 
-                items[i].CopyTo(array, index);
-                index += items[i].Count;
+                list.CopyTo(array, index);
+                index += list.Count;
             }
         }
 
@@ -94,22 +102,21 @@ namespace HashTable
         public IEnumerator<T> GetEnumerator()
         {
             int temp = modCount;
-            for (int i = 0; i < items.Length; i++)
+            foreach (List<T> list in items)
             {
-                if (items[i] == null)
+                if (list == null)
                 {
                     continue;
                 }
 
-                for (int j = 0; j < items[i].Count; j++)
+                for (int j = 0; j < list.Count; j++)
                 {
-
                     if (modCount != temp)
                     {
                         throw new InvalidOperationException("Список менялся за время обхода");
                     }
 
-                    yield return items[i].ElementAt(j);
+                    yield return list.ElementAt(j);
                 }
             }
         }
