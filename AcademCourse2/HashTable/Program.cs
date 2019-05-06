@@ -44,6 +44,16 @@ namespace HashTable
                 i++;
             }
 
+            string[] array = new string[5];
+
+            words.CopyTo(array, 0);
+
+            for (int j = 0; j < array.Length; j++)
+            {
+                Console.WriteLine(array[j]);
+            }
+
+            //Console.WriteLine(words);
             Console.ReadKey();
         }
     }

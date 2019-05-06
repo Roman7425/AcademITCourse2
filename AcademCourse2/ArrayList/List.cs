@@ -12,6 +12,7 @@ namespace ArrayList
         private T[] items;
         public int Count { get; private set; }
         private int modCount = 0;
+        public bool a { get; }
 
         public int Capacity
         {
@@ -32,6 +33,11 @@ namespace ArrayList
                     Array.Resize(ref items, value);
                 }
             }
+        }
+
+        public List(bool b = true)
+        {
+            a = b;
         }
 
         public List()

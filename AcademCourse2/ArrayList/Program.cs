@@ -10,21 +10,27 @@ namespace ArrayList
     {
         static void Main(string[] args)
         {
-            List<int> number = new List<int>();
+            try
+            {
+                int? value = null;
+                object reference = value;
+                int? twin = (int?)reference;
 
-            number.Add(5);
-            number.Add(6);
-            number.Add(7);
-            number.Add(8);
+                value.GetHashCode();
+                System.Console.Write("step 1");
 
-            Console.WriteLine(number);
-            Console.WriteLine(number.Count);
-            Console.WriteLine(number.Capacity);
+                twin.GetHashCode();
+                System.Console.Write("; step 2");
 
-            number.Insert(4,9);
-            Console.WriteLine(number);
-            Console.WriteLine(number.Count);
-            Console.WriteLine(number.Capacity);
+                reference.GetHashCode();
+                System.Console.Write("; step 3");
+            }
+            catch (System.Exception)
+            {
+                System.Console.Write("; exception");
+            }
+
+
             Console.ReadKey();
         }
     }

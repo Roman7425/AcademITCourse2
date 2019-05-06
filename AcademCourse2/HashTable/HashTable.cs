@@ -25,7 +25,7 @@ namespace HashTable
 
         private int GetIndex(T value)
         {
-            if(value == null)
+            if (value == null)
             {
                 return 0;
             }
@@ -59,15 +59,25 @@ namespace HashTable
         {
             int index = GetIndex(value);
 
+            if (items[index] == null)
+            {
+                return false;
+            }
+
             return items[index].Contains(value);
         }
 
         public bool Remove(T value)
         {
-            int index = Math.Abs(value.GetHashCode() % items.Length);
-            modCount++;
-            Count--;
-            return items[index].Remove(value);
+            if (Contains(value))
+            {
+                int index = GetIndex(value);
+                modCount++;
+                Count--;
+                return items[index].Remove(value);
+            }
+
+            return false;
         }
 
         public void CopyTo(T[] array, int index)
@@ -82,15 +92,11 @@ namespace HashTable
                 throw new ArgumentException("Недостаточно места в массиве");
             }
 
-            foreach (List<T> list in items)
+            int i = 0;
+            foreach (T value in this)
             {
-                if(list == null)
-                {
-                    continue;
-                }
-
-                list.CopyTo(array, index);
-                index += list.Count;
+                array[i] = value;
+                i++;
             }
         }
 
@@ -109,16 +115,29 @@ namespace HashTable
                     continue;
                 }
 
-                for (int j = 0; j < list.Count; j++)
+                foreach (T data in list)
                 {
                     if (modCount != temp)
                     {
                         throw new InvalidOperationException("Список менялся за время обхода");
                     }
 
-                    yield return list.ElementAt(j);
+                    yield return data;
                 }
             }
+        }
+
+        public override string ToString()
+        {
+            int i = 0;
+            IEnumerator<T> enumerator1 = GetEnumerator();
+            while (i < Count)
+            {
+                enumerator1.MoveNext();
+                Console.WriteLine(enumerator1.Current);
+                i++;
+            }
+            return null;
         }
 
         public bool IsReadOnly => false;
