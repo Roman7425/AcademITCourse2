@@ -69,12 +69,13 @@ namespace HashTable
 
         public bool Remove(T value)
         {
-            if (Contains(value))
+            int index = GetIndex(value);
+
+            if (items[index].Remove(value))
             {
-                int index = GetIndex(value);
-                modCount++;
                 Count--;
-                return items[index].Remove(value);
+                modCount++;
+                return true;
             }
 
             return false;
@@ -129,15 +130,20 @@ namespace HashTable
 
         public override string ToString()
         {
-            int i = 0;
-            IEnumerator<T> enumerator1 = GetEnumerator();
-            while (i < Count)
+            StringBuilder sb = new StringBuilder();
+            foreach (T value in this)
             {
-                enumerator1.MoveNext();
-                Console.WriteLine(enumerator1.Current);
-                i++;
+                if (value == null)
+                {
+                    sb.Append("Null ");
+                }
+                else
+                {
+                    sb.Append(value + " ");
+                }
             }
-            return null;
+
+            return sb.ToString();
         }
 
         public bool IsReadOnly => false;
