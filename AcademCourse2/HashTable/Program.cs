@@ -21,7 +21,7 @@ namespace HashTable
             string[] array = new string[5];
 
 
-            Console.WriteLine(words.Remove(null));
+            Console.WriteLine(words.Remove("Jorsh"));
 
             Console.WriteLine(words);
             Console.ReadKey();

@@ -71,7 +71,7 @@ namespace HashTable
         {
             int index = GetIndex(value);
 
-            if (items[index].Remove(value))
+            if (items[index] != null && items[index].Remove(value))
             {
                 Count--;
                 modCount++;
@@ -131,16 +131,25 @@ namespace HashTable
         public override string ToString()
         {
             StringBuilder sb = new StringBuilder();
+            int i = 0;
             foreach (T value in this)
             {
                 if (value == null)
                 {
-                    sb.Append("Null ");
+                    sb.Append("Null");
                 }
                 else
                 {
-                    sb.Append(value + " ");
+                    sb.Append(value);
                 }
+
+                if (i == Count - 1)
+                {
+                    break;
+                }
+
+                sb.Append(", ");
+                i++;
             }
 
             return sb.ToString();
