@@ -8,7 +8,7 @@ namespace Tree
 {
     class Tree<T> where T : IComparable<T>
     {
-        public Node<T> Top { get; set; }
+        public Node<T> Top { get; private set; }
         public int Count { get; private set; }
 
         public Tree()
