@@ -7,7 +7,7 @@ using System.Collections;
 
 namespace Tree
 {
-    class Node<T> : IComparable<Node<T>>
+    class Node<T> : IComparable<T> where T : IComparable<T>
     {
         public Node<T> Left { get; set; }
         public Node<T> Right { get; set; }
@@ -18,9 +18,28 @@ namespace Tree
             Data = data;
         }
 
-        public int CompareTo(Node<T> node)
+        public Node(T data, Node<T> left, Node<T> right)
         {
-            //Реализовать сравнение по полю Data
+            Data = data;
+            Left = left;
+            Right = right;
+        }
+
+        public int CompareTo(T value)
+        {
+            if (Data == null && value == null)
+            {
+                return 0;
+            }
+            if (Data == null)
+            {
+                return -1;
+            }
+            if(value == null)
+            {
+                return 1;
+            }
+            return Data.CompareTo(value);
         }
     }
 }
