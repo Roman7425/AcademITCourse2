@@ -22,7 +22,6 @@ namespace Tree
 
             Console.WriteLine(tree.WideBypass());
 
-            tree.VisitR(tree.Top);
             Console.WriteLine();
             Console.WriteLine(tree.Visit());
 
@@ -38,10 +37,8 @@ namespace Tree
 
             Console.WriteLine(treeStr.WideBypass());
 
-            treeStr.VisitR(treeStr.Top);
             Console.WriteLine();
             Console.WriteLine(treeStr.Visit());
-
 
             Console.ReadLine();
         }

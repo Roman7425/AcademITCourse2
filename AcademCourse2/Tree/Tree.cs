@@ -8,7 +8,7 @@ namespace Tree
 {
     class Tree<T> where T : IComparable<T>
     {
-        public Node<T> Top { get; private set; }
+        private Node<T> Top { get; set; }
         public int Count { get; private set; }
 
         public Tree()
@@ -26,37 +26,37 @@ namespace Tree
             if (Top == null)
             {
                 Top = new Node<T>(value);
+                Count++;
+                return;
             }
-            else
-            {
-                Node<T> current = Top;
-                bool hasAdd = false;
 
-                while (!hasAdd)
+            Node<T> current = Top;
+            bool hasAdd = false;
+
+            while (!hasAdd)
+            {
+                if (current.CompareTo(value) < 1)
                 {
-                    if (current.CompareTo(value) < 1)
+                    if (current.Right == null)
                     {
-                        if (current.Right == null)
-                        {
-                            current.Right = new Node<T>(value);
-                            hasAdd = true;
-                        }
-                        else
-                        {
-                            current = current.Right;
-                        }
+                        current.Right = new Node<T>(value);
+                        hasAdd = true;
                     }
                     else
                     {
-                        if (current.Left == null)
-                        {
-                            current.Left = new Node<T>(value);
-                            hasAdd = true;
-                        }
-                        else
-                        {
-                            current = current.Left;
-                        }
+                        current = current.Right;
+                    }
+                }
+                else
+                {
+                    if (current.Left == null)
+                    {
+                        current.Left = new Node<T>(value);
+                        hasAdd = true;
+                    }
+                    else
+                    {
+                        current = current.Left;
                     }
                 }
             }
@@ -69,27 +69,28 @@ namespace Tree
             {
                 return false;
             }
-            else
-            {
-                Node<T> current = Top;
 
-                while (current != null)
+            Node<T> current = Top;
+
+            int compare;
+            while (current != null)
+            {
+                compare = current.CompareTo(value);
+
+                if (compare < 0)
                 {
-                    if (current.CompareTo(value) == -1)
-                    {
-                        current = current.Right;
-                    }
-                    else if (current.CompareTo(value) == 1)
-                    {
-                        current = current.Left;
-                    }
-                    else
-                    {
-                        return true;
-                    }
+                    current = current.Right;
                 }
-                return false;
+                else if (compare > 0)
+                { 
+                    current = current.Left;
+                }
+                else
+                {
+                    return true;
+                }
             }
+            return false;
         }
 
         private Node<T> FindParent(T value)
@@ -299,7 +300,7 @@ namespace Tree
             return sb.ToString();
         }
 
-        public void VisitR(Node<T> node)
+        public void VisitRecursion(Node<T> node)
         {
             if (node.Data == null)
             {
@@ -312,11 +313,11 @@ namespace Tree
 
             if (node.Left != null)
             {
-                VisitR(node.Left);
+                VisitRecursion(node.Left);
             }
             if (node.Right != null)
             {
-                VisitR(node.Right);
+                VisitRecursion(node.Right);
             }
         }
 
