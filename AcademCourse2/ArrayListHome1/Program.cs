@@ -70,7 +70,7 @@ namespace ArrayListHome1
 
         static List<string> InputList(string file)
         {
-            List<string> result = new List<string> ();
+            List<string> result = new List<string>();
             using (StreamReader sr = new StreamReader(file))
             {
                 string s = sr.ReadLine();
@@ -88,7 +88,7 @@ namespace ArrayListHome1
         {
             for (int i = 0; i < list.Count; i++)
             {
-                if(list[i] % 2 == 0)
+                if (list[i] % 2 == 0)
                 {
                     list.RemoveAt(i);
                 }
@@ -103,9 +103,9 @@ namespace ArrayListHome1
             bool hasValue = false;
             for (int i = 1; i < list.Count; i++)
             {
-                for(int j = 0; j < result.Count; j++)
+                for (int j = 0; j < result.Count; j++)
                 {
-                    if(list[i] == result[j])
+                    if (list[i] == result[j])
                     {
                         hasValue = true;
                         break;
