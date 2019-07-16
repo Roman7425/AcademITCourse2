@@ -15,54 +15,34 @@ namespace ArrayListHome1
             Console.WriteLine("Задание 1");
             List<string> list = InputList("file.txt");
 
-            for (int i = 0; i < list.Count; i++)
+            foreach (string str in list)
             {
-                Console.WriteLine(list[i]);
+                Console.WriteLine(str);
             }
 
             // Задание 2
             Console.WriteLine();
             Console.WriteLine("Задание 2");
-            List<int> list1 = new List<int>();
-            list1.Add(1);
-            list1.Add(2);
-            list1.Add(3);
-            list1.Add(4);
-            list1.Add(5);
-            list1.Add(6);
-            list1.Add(7);
-            list1.Add(8);
-            list1.Add(9);
-            list1.Add(10);
+            List<int> list1 = new List<int>() { 1, 2, 2, 4, 6, 3, 2, 8, 3, 5, 10, 9, 7, 6, 4 };
 
             DeleteEvenNumbers(list1);
 
-            for (int i = 0; i < list1.Count; i++)
+            foreach (int i in list1)
             {
-                Console.WriteLine(list1[i]);
+                Console.WriteLine(i);
             }
 
             // Задание 3
             Console.WriteLine();
             Console.WriteLine("Задание 3");
 
-            List<int> list2 = new List<int>();
-            list2.Add(10);
-            list2.Add(2);
-            list2.Add(1);
-            list2.Add(3);
-            list2.Add(3);
-            list2.Add(2);
-            list2.Add(5);
-            list2.Add(6);
-            list2.Add(5);
-            list2.Add(10);
+            List<int> list2 = new List<int>() { 10, 2, 3, 4, 3, 2, 5, 6, 7, 10, 2, 3, 3, 8, 9, 12 };
 
-            List<int> list3 = NoRepeat(list2);
+            List<int> list3 = DeleteRepeat(list2);
 
-            for (int i = 0; i < list3.Count; i++)
+            foreach (int i in list3)
             {
-                Console.WriteLine(list3[i]);
+                Console.WriteLine(i);
             }
 
             Console.ReadLine();
@@ -70,6 +50,11 @@ namespace ArrayListHome1
 
         static List<string> InputList(string file)
         {
+            if (!File.Exists(file))
+            {
+                throw new FileNotFoundException("Файл не найден!");
+            }
+
             List<string> result = new List<string>();
             using (StreamReader sr = new StreamReader(file))
             {
@@ -91,35 +76,20 @@ namespace ArrayListHome1
                 if (list[i] % 2 == 0)
                 {
                     list.RemoveAt(i);
+                    i--;
                 }
             }
         }
 
-        static List<int> NoRepeat(List<int> list)
+        static List<int> DeleteRepeat(List<int> list)
         {
             List<int> result = new List<int>();
-            result.Add(list[0]);
 
-            bool hasValue = false;
-            for (int i = 1; i < list.Count; i++)
+            IEnumerable<int> result1 = list.Distinct();
+
+            foreach (int number in result1)
             {
-                for (int j = 0; j < result.Count; j++)
-                {
-                    if (list[i] == result[j])
-                    {
-                        hasValue = true;
-                        break;
-                    }
-                }
-
-                if (!hasValue)
-                {
-                    result.Add(list[i]);
-                }
-                else
-                {
-                    hasValue = false;
-                }
+                result.Add(number);
             }
 
             return result;
