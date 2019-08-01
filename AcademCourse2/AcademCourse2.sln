@@ -23,6 +23,10 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Tree", "Tree\Tree.csproj", 
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ArrayListHome1", "ArrayListHome1\ArrayListHome1.csproj", "{4134BCE3-7360-472F-814E-5B4260BBFF05}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Tree1", "Tree1\Tree1.csproj", "{B9486C9C-49D6-4E27-BBDB-BA7E51355EDC}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Temperature", "Temperature\Temperature.csproj", "{47D36B6B-5D2F-4969-B19F-63A1AF95DE5F}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -69,6 +73,14 @@ Global
 		{4134BCE3-7360-472F-814E-5B4260BBFF05}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{4134BCE3-7360-472F-814E-5B4260BBFF05}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{4134BCE3-7360-472F-814E-5B4260BBFF05}.Release|Any CPU.Build.0 = Release|Any CPU
+		{B9486C9C-49D6-4E27-BBDB-BA7E51355EDC}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{B9486C9C-49D6-4E27-BBDB-BA7E51355EDC}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{B9486C9C-49D6-4E27-BBDB-BA7E51355EDC}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{B9486C9C-49D6-4E27-BBDB-BA7E51355EDC}.Release|Any CPU.Build.0 = Release|Any CPU
+		{47D36B6B-5D2F-4969-B19F-63A1AF95DE5F}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{47D36B6B-5D2F-4969-B19F-63A1AF95DE5F}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{47D36B6B-5D2F-4969-B19F-63A1AF95DE5F}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{47D36B6B-5D2F-4969-B19F-63A1AF95DE5F}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

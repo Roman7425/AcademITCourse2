@@ -10,35 +10,23 @@ namespace Tree
     {
         static void Main(string[] args)
         {
-            Tree<int> tree = new Tree<int>(20);
-            tree.Add(16);
-            tree.Add(31);
-            tree.Add(46);
-            tree.Add(19);
-            tree.Add(43);
-            tree.Add(29);
-            tree.Add(44);
-            tree.Add(15);
+            Tree<int> tree1 = new Tree<int>();
+            tree1.Add(10);
+            tree1.Add(0);
+            tree1.Add(20);
+            tree1.Add(-5);
+            tree1.Add(9);
+            tree1.Add(15);
+            tree1.Add(25);
+            tree1.Add(-3);
+            tree1.Add(-1);
+            tree1.Add(7);
+            tree1.Add(13);
+            tree1.Add(17);
+            tree1.Add(22);
+            tree1.Add(30);
 
-            Console.WriteLine(tree.WideBypass());
-
-            Console.WriteLine();
-            Console.WriteLine(tree.Visit());
-
-            Tree<string> treeStr = new Tree<string>("Roman");
-            treeStr.Add("Stas");
-            treeStr.Add("Stasik");
-            treeStr.Add("Andry");
-            treeStr.Add("Alena");
-            treeStr.Add("Nuts");
-            treeStr.Add("dayana");
-            treeStr.Add(null);
-            treeStr.Add("Bob");
-
-            Console.WriteLine(treeStr.WideBypass());
-
-            Console.WriteLine();
-            Console.WriteLine(treeStr.Visit());
+            Console.WriteLine(tree1.WideBypass());
 
             Console.ReadLine();
         }
