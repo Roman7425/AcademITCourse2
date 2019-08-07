@@ -8,7 +8,7 @@ namespace Tree1
 {
     class Tree<T>
     {
-        private Node<T> Top;
+        private Node<T> Root;
         public int Count { get; private set; }
         private IComparer<T> comparer;
 
@@ -24,45 +24,55 @@ namespace Tree1
 
         public Tree(T value)
         {
-            Top = new Node<T>(value);
+            Root = new Node<T>(value);
             Count++;
         }
 
-        private int CompareNodes(Node<T> x, Node<T> y)
+        private int CompareNodes(T x, T y)
         {
             if (comparer == null)
             {
-                IComparable<T> x1 = (IComparable<T>)x.Data;
-                //IComparable<T> y1 = (IComparable<T>)y.Data;
+                if (x == null && y == null)
+                {
+                    return 0;
+                }
+                else if (x == null)
+                {
+                    return -1;
+                }
+                else if (y == null)
+                {
+                    return 1;
+                }
+                else
+                {
+                    IComparable<T> x1 = (IComparable<T>)x;
 
-                return x1.CompareTo(y.Data);
+                    return x1.CompareTo(y);
+                }
             }
-            else
-            {
-                return comparer.Compare(x.Data, y.Data);
-            }
+            return comparer.Compare(x, y);
         }
 
         public void Add(T value)
         {
-            if (Top == null)
+            if (Root == null)
             {
-                Top = new Node<T>(value);
+                Root = new Node<T>(value);
                 Count++;
                 return;
             }
 
-            Node<T> current = Top;
-            Node<T> newNode = new Node<T>(value);
+            Node<T> current = Root;
             bool hasAdd = false;
 
             while (!hasAdd)
             {
-                if (CompareNodes(current, newNode) < 1)
+                if (CompareNodes(current.Data, value) <= 0)
                 {
                     if (current.Right == null)
                     {
-                        current.Right = newNode;
+                        current.Right = new Node<T>(value);
                         hasAdd = true;
                     }
                     else
@@ -74,7 +84,7 @@ namespace Tree1
                 {
                     if (current.Left == null)
                     {
-                        current.Left = newNode;
+                        current.Left = new Node<T>(value);
                         hasAdd = true;
                     }
                     else
@@ -86,20 +96,18 @@ namespace Tree1
             Count++;
         }
 
-        public bool HasValue(T value)
+        public bool Contains(T value)
         {
-            if (Top == null)
+            if (Root == null)
             {
                 return false;
             }
 
-            Node<T> current = Top;
+            Node<T> current = Root;
 
-            int compare;
-            Node<T> searchNode = new Node<T>(value);
             while (current != null)
             {
-                compare = CompareNodes(current, searchNode);
+                int compare = CompareNodes(current.Data, value);
 
                 if (compare < 0)
                 {
@@ -119,19 +127,19 @@ namespace Tree1
 
         private Node<T> FindParent(T value)
         {
-            Node<T> current = Top;
+            Node<T> current = Root;
             Node<T> parent = null;
             Node<T> childNode = new Node<T>(value);
 
-            if (CompareNodes(Top, childNode) == 0)
+            if (CompareNodes(Root.Data, childNode.Data) == 0)
             {
-                current = Top.Right;
-                parent = Top;
+                current = Root.Right;
+                parent = Root;
             }
 
             while (current != null)
             {
-                int result = CompareNodes(current, childNode);
+                int result = CompareNodes(current.Data, childNode.Data);
 
                 if (result > 0)
                 {
@@ -153,38 +161,38 @@ namespace Tree1
 
         public bool Remove(T value)
         {
-            if (Top == null)
+            if (Root == null)
             {
                 return false;
             }
-            else if (CompareNodes(Top, new Node<T>(value)) == 0)
+            else if (CompareNodes(Root.Data, value) == 0)
             {
-                if (Top.Left == null && Top.Right == null)
+                if (Root.Left == null && Root.Right == null)
                 {
-                    Top = null;
+                    Root = null;
                 }
-                else if (Top.Left != null && Top.Right == null)
+                else if (Root.Left != null && Root.Right == null)
                 {
-                    Top = Top.Left;
+                    Root = Root.Left;
                 }
-                else if (Top.Left == null && Top.Right != null)
+                else if (Root.Left == null && Root.Right != null)
                 {
-                    Top = Top.Right;
+                    Root = Root.Right;
                 }
                 else
                 {
-                    Node<T> minLeft = Top.Right;
+                    Node<T> minLeft = Root.Right;
 
                     while (minLeft.Left != null)
                     {
                         minLeft = minLeft.Left;
                     }
 
-                    Node<T> newNode = new Node<T>(minLeft.Data, Top.Left, Top.Right);
-                    Top = newNode;
-                    if (Top.Right == minLeft)
+                    Node<T> newNode = new Node<T>(minLeft.Data, Root.Left, Root.Right);
+                    Root = newNode;
+                    if (Root.Right == minLeft)
                     {
-                        Top.Right = Top.Right.Right;
+                        Root.Right = Root.Right.Right;
                     }
                     else if (minLeft.Right == null)
                     {
@@ -204,100 +212,103 @@ namespace Tree1
                 {
                     return false;
                 }
+
+                Node<T> parent = FindParent(value);
+                Node<T> deleteNode = null;
+
+                int leftOrRight = CompareNodes(parent.Data, value);
+                if (leftOrRight > 0)
+                {
+                    deleteNode = parent.Left;
+                }
                 else
                 {
-                    Node<T> parent = FindParent(value);
-                    Node<T> deleteNode = null;
+                    deleteNode = parent.Right;
+                }
 
-                    int leftOrRight = CompareNodes(parent, new Node<T>(value));
+                if (deleteNode.Right == null && deleteNode.Left == null)
+                {
                     if (leftOrRight > 0)
                     {
-                        deleteNode = parent.Left;
+                        parent.Left = null;
                     }
                     else
                     {
-                        deleteNode = parent.Right;
+                        parent.Right = null;
                     }
-
-                    if (deleteNode.Right == null && deleteNode.Left == null)
-                    {
-                        if (leftOrRight > 0)
-                        {
-                            parent.Left = null;
-                        }
-                        else
-                        {
-                            parent.Right = null;
-                        }
-                    }
-                    else if (deleteNode.Right == null && deleteNode.Left != null)
-                    {
-                        if (leftOrRight > 0)
-                        {
-                            parent.Left = parent.Left.Left;
-                        }
-                        else
-                        {
-                            parent.Right = parent.Right.Left;
-                        }
-                    }
-                    else if (deleteNode.Right != null && deleteNode.Left == null)
-                    {
-                        if (leftOrRight > 0)
-                        {
-                            parent.Left = parent.Left.Right;
-                        }
-                        else
-                        {
-                            parent.Right = parent.Right.Right;
-                        }
-                    }
-                    else
-                    {
-                        Node<T> minLeft = deleteNode.Right;
-
-                        while (minLeft.Left != null)
-                        {
-                            minLeft = minLeft.Left;
-                        }
-
-                        if (deleteNode.Right == minLeft)
-                        {
-                            deleteNode.Right = deleteNode.Right.Right;
-                        }
-                        else if (minLeft.Right == null)
-                        {
-                            Node<T> parentMinLeft = FindParent(minLeft.Data);
-                            parentMinLeft.Left = null;
-                        }
-                        else
-                        {
-                            Node<T> parentMinLeft = FindParent(minLeft.Data);
-                            parentMinLeft.Left = parentMinLeft.Left.Right;
-                        }
-
-                        Node<T> newNode = new Node<T>(minLeft.Data, deleteNode.Left, deleteNode.Right);
-
-                        if (leftOrRight > 0)
-                        {
-                            parent.Left = newNode;
-                        }
-                        else
-                        {
-                            parent.Right = newNode;
-                        }
-                    }
-                    Count--;
-                    return true;
                 }
+                else if (deleteNode.Right == null && deleteNode.Left != null)
+                {
+                    if (leftOrRight > 0)
+                    {
+                        parent.Left = parent.Left.Left;
+                    }
+                    else
+                    {
+                        parent.Right = parent.Right.Left;
+                    }
+                }
+                else if (deleteNode.Right != null && deleteNode.Left == null)
+                {
+                    if (leftOrRight > 0)
+                    {
+                        parent.Left = parent.Left.Right;
+                    }
+                    else
+                    {
+                        parent.Right = parent.Right.Right;
+                    }
+                }
+                else
+                {
+                    Node<T> minLeft = deleteNode.Right;
+
+                    while (minLeft.Left != null)
+                    {
+                        minLeft = minLeft.Left;
+                    }
+
+                    if (deleteNode.Right == minLeft)
+                    {
+                        deleteNode.Right = deleteNode.Right.Right;
+                    }
+                    else if (minLeft.Right == null)
+                    {
+                        Node<T> parentMinLeft = FindParent(minLeft.Data);
+                        parentMinLeft.Left = null;
+                    }
+                    else
+                    {
+                        Node<T> parentMinLeft = FindParent(minLeft.Data);
+                        parentMinLeft.Left = parentMinLeft.Left.Right;
+                    }
+
+                    Node<T> newNode = new Node<T>(minLeft.Data, deleteNode.Left, deleteNode.Right);
+
+                    if (leftOrRight > 0)
+                    {
+                        parent.Left = newNode;
+                    }
+                    else
+                    {
+                        parent.Right = newNode;
+                    }
+                }
+                Count--;
+                return true;
             }
         }
 
         public void WideBypass(Action<T> action)
         {
+            if (Count == 0)
+            {
+                return;
+            }
+
             Queue<Node<T>> q = new Queue<Node<T>>();
 
-            q.Enqueue(Top);
+            q.Enqueue(Root);
             while (q.Count != 0)
             {
                 Node<T> current = q.Dequeue();
@@ -317,9 +328,14 @@ namespace Tree1
 
         public void Visit(Action<T> action)
         {
+            if (Count == 0)
+            {
+                return;
+            }
+
             Stack<Node<T>> s = new Stack<Node<T>>();
 
-            s.Push(Top);
+            s.Push(Root);
 
             while (s.Count != 0)
             {
@@ -340,10 +356,15 @@ namespace Tree1
 
         public void VisitRecursion(Action<T> action)
         {
-            VisitRecursionHelp(Top, action);
+            if (Count == 0)
+            {
+                return;
+            }
+
+            VisitRecursionHelp(Root, action);
         }
 
-        private void VisitRecursionHelp(Node<T> node, Action<T> action)
+        static private void VisitRecursionHelp(Node<T> node, Action<T> action)
         {
             action(node.Data);
 
