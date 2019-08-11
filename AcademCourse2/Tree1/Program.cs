@@ -61,7 +61,7 @@ namespace Tree1
 
             Tree<int> tree1 = new Tree<int>();
             tree1.Add(10);
-            tree1.Add(10);
+            tree1.Add(11);
             tree1.Add(20);
             tree1.Add(-5);
             tree1.Add(9);
@@ -78,7 +78,7 @@ namespace Tree1
             Action<string> a;
             a = ToStrings;
 
-
+            tree1.Remove(10);
             Console.ReadKey();
         }
 
