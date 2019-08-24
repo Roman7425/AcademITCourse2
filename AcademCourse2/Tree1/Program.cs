@@ -59,26 +59,34 @@ namespace Tree1
             str.Add("stas");
             str.Add(null);
 
+            //Tree<int> tree1 = new Tree<int>();
+            //tree1.Add(10);
+            //tree1.Add(11);
+            //tree1.Add(20);
+            //tree1.Add(-5);
+            //tree1.Add(9);
+            //tree1.Add(15);
+            //tree1.Add(25);
+            //tree1.Add(-3);
+            //tree1.Add(-1);
+            //tree1.Add(7);
+            //tree1.Add(13);
+            //tree1.Add(17);
+            //tree1.Add(22);
+            //tree1.Add(30);
+
             Tree<int> tree1 = new Tree<int>();
-            tree1.Add(10);
-            tree1.Add(11);
-            tree1.Add(20);
-            tree1.Add(-5);
-            tree1.Add(9);
-            tree1.Add(15);
+            tree1.Add(50);
+            tree1.Add(100);
+            tree1.Add(75);
+            tree1.Add(80);
+            tree1.Add(70);
             tree1.Add(25);
-            tree1.Add(-3);
-            tree1.Add(-1);
-            tree1.Add(7);
-            tree1.Add(13);
-            tree1.Add(17);
-            tree1.Add(22);
-            tree1.Add(30);
 
             Action<string> a;
             a = ToStrings;
 
-            tree1.Remove(10);
+            tree1.Remove(50);
             Console.ReadKey();
         }
 
