@@ -27,14 +27,17 @@ namespace Lambda
                 new Person("Olesya",16)
             };
 
+            // Пункт а
             var uniqueName = people
                 .Select(x => x.Name)
                 .Distinct()
                 .ToList();
 
+            // Пункт б
             string stringUniqueName = "Names: " + string.Join(", ", uniqueName);
             Console.WriteLine(stringUniqueName);
 
+            // Пункт в
             var youngest18 = people
                 .Where(x => x.Age < 18)
                 .ToList();
@@ -42,10 +45,12 @@ namespace Lambda
                 .Average(x => x.Age);
             Console.WriteLine(averageAge);
 
+            // Пункт г
             var group = people
                 .GroupBy(x => x.Name)
                 .Select(g => new { Name = g.Key, average = g.Average(a => a.Age) });
 
+            // Пункт д
             var oldest20Youngest45 = people
                 .Where(x => x.Age >= 20 && x.Age <= 45);
             string namesOldest20Youngest45 = string.Join(", ", oldest20Youngest45
