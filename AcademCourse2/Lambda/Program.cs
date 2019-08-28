@@ -27,32 +27,43 @@ namespace Lambda
                 new Person("Olesya",16)
             };
 
-            List<string> uniqueName = people.Select(x => x.GetName()).Distinct().ToList();
+            var uniqueName = people
+                .Select(x => x.Name)
+                .Distinct()
+                .ToList();
 
-            string stringUniqueName = "Names: " + string.Join(", ", people.Select(x => x.GetName()));
+            string stringUniqueName = "Names: " + string.Join(", ", uniqueName);
             Console.WriteLine(stringUniqueName);
 
-            List<Person> youngest18 = people.Where(x => x.GetAge() < 18).ToList();
-            int averageAge = (int)youngest18.Average(x => x.GetAge());
+            var youngest18 = people
+                .Where(x => x.Age < 18)
+                .ToList();
+            int averageAge = (int)youngest18
+                .Average(x => x.Age);
             Console.WriteLine(averageAge);
 
-            var group = people.GroupBy(x => x.GetAge(), x => x.GetName());
+            var group = people
+                .GroupBy(x => x.Name)
+                .Select(g => new { Name = g.Key, average = g.Average(a => a.Age) });
 
-            var oldest20Youngest45 = people.Where(x => x.GetAge() > 20 && x.GetAge() < 45);
-            string namesOldest20Youngest45 = string.Join(", ", oldest20Youngest45.OrderByDescending(x => x.GetAge()).Select(x => x.GetName()));
+            var oldest20Youngest45 = people
+                .Where(x => x.Age >= 20 && x.Age <= 45);
+            string namesOldest20Youngest45 = string.Join(", ", oldest20Youngest45
+                .OrderByDescending(x => x.Age)
+                .Select(x => x.Name));
             Console.WriteLine(namesOldest20Youngest45);
 
             //Задача 2
-            Console.WriteLine("Введите число: ");
-            int number = Convert.ToInt32(Console.ReadLine());
-            foreach (double sqrt in GetSqrt(number))
+            Console.WriteLine("Введите нужное количество числел: ");
+            int countSqrt = Convert.ToInt32(Console.ReadLine());
+            foreach (double sqrt in GetSqrt().Take(countSqrt))
             {
                 Console.WriteLine(sqrt);
             }
 
-            Console.WriteLine("Введите число: ");
-            int numberFibonacci = Convert.ToInt32(Console.ReadLine());
-            foreach (double sqrt in GetFibonacciNumber(numberFibonacci))
+            Console.WriteLine("Введите нужное количество числел: ");
+            int countFibonacci = Convert.ToInt32(Console.ReadLine());
+            foreach (double sqrt in GetFibonacciNumber().Take(countFibonacci))
             {
                 Console.WriteLine(sqrt);
             }
@@ -60,25 +71,26 @@ namespace Lambda
             Console.ReadKey();
         }
 
-        public static IEnumerable<double> GetSqrt(int a)
+        public static IEnumerable<double> GetSqrt()
         {
             int i = 1;
-            while (i <= a)
+            while (true)
             {
                 yield return Math.Sqrt(i);
                 i++;
             }
         }
 
-        public static IEnumerable<int> GetFibonacciNumber(int a)
+        public static IEnumerable<int> GetFibonacciNumber()
         {
             int i = 0;
             int j = 1;
-            int temp;
-            while (j < a)
+            yield return 0;
+            yield return 1;
+            while (true)
             {
-                temp = j;
-                j = j + i;
+                int temp = j;
+                j += i;
                 i = temp;
                 yield return j;
             }
