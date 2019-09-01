@@ -11,7 +11,7 @@ namespace Lambda
         static void Main(string[] args)
         {
             //Задача 1
-            List<Person> people = new List<Person>()
+            var people = new List<Person>()
             {
                 new Person("Andry", 19),
                 new Person("Roman", 24),
@@ -28,27 +28,32 @@ namespace Lambda
             };
 
             // Пункт а
-            var uniqueName = people
+            var uniqueNames = people
                 .Select(x => x.Name)
                 .Distinct()
                 .ToList();
 
             // Пункт б
-            string stringUniqueName = "Names: " + string.Join(", ", uniqueName);
+            string stringUniqueName = "Names: " + string.Join(", ", uniqueNames);
             Console.WriteLine(stringUniqueName);
 
             // Пункт в
             var youngest18 = people
                 .Where(x => x.Age < 18)
                 .ToList();
-            int averageAge = (int)youngest18
+            double averageAge = youngest18
                 .Average(x => x.Age);
             Console.WriteLine(averageAge);
 
             // Пункт г
             var group = people
                 .GroupBy(x => x.Name)
-                .Select(g => new { Name = g.Key, average = g.Average(a => a.Age) });
+                .ToDictionary(z => z.Key, z => z.Average(a => a.Age));
+
+            foreach (KeyValuePair<string, double> pair in group)
+            {
+                Console.WriteLine(pair.Key + " - " + pair.Value);
+            }
 
             // Пункт д
             var oldest20Youngest45 = people
