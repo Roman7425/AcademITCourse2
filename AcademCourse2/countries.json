@@ -1,0 +1,71 @@
+[
+  {
+    "englishName": "Russia",
+    "russianName": "Россия",
+    "codeISO": "RUS",
+    "currencyCode": "643",
+    "cities": [
+      {
+        "englishName": "Moscow",
+        "russianName": "Москва",
+        "population": 12630289
+      },
+      {
+        "englishName": "Novosibirsk",
+        "russianName": "Новосибирск",
+        "population": 1612833
+      },
+      {
+        "englishName": "Kemerovo",
+        "russianName": "Кемерово",
+        "population": 538188
+      }
+    ]
+  },
+  {
+    "englishName": "Italy",
+    "russianName": "Италия",
+    "codeISO": "ITA",
+    "currencyCode": "978",
+    "cities": [
+      {
+        "englishName": "Roma",
+        "russianName": "Рим",
+        "population": 2867078
+      },
+      {
+        "englishName": "Milano",
+        "russianName": "Милан",
+        "population": 1350487
+      },
+      {
+        "englishName": "Napoli",
+        "russianName": "Неаполь",
+        "population": 972212
+      }
+    ]
+  },
+  {
+    "englishName": "Czech Republic",
+    "russianName": "Чехия",
+    "codeISO": "CZE",
+    "currencyCode": "203",
+    "cities": [
+      {
+        "englishName": "Prague",
+        "russianName": "Прага",
+        "population": 1309000
+      },
+      {
+        "englishName": "Liberec",
+        "russianName": "Либерец",
+        "population": "97770"
+      },
+      {
+        "englishName": "Olomouc",
+        "russianName": "Оломоуц",
+        "population": 101268
+      }
+    ]
+  }
+]

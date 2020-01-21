@@ -1,0 +1,96 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<countries>
+  <country englishName="Russia">
+    <russianName>Россия</russianName>
+    <codeISO>RUS</codeISO>
+    <currencyCode>643</currencyCode>
+    <cities>
+      <city englishName="Moscow">
+        <russianName>
+           Москва
+        </russianName>
+        <population>
+          12630289
+        </population>
+      </city>
+      <city englishName="Novosibirsk">
+        <russianName>
+           Новосибирск
+        </russianName>
+        <population>
+          1612833
+        </population>
+      </city>
+      <city englishName="Kemerovo">
+        <russianName>
+           Кемерово
+        </russianName>
+        <population>
+          538188
+        </population>
+      </city>
+    </cities>
+  </country>
+  <country englishName="Italy">
+    <russianName>Италия</russianName>
+    <codeISO>ITA</codeISO>
+    <currencyCode>978</currencyCode>
+    <cities>
+      <city englishName="Roma">
+        <russianName>
+           Рим
+        </russianName>
+        <population>
+          2867078
+        </population>
+      </city>
+      <city englishName="Milano">
+        <russianName>
+           Милан
+        </russianName>
+        <population>
+          1350487
+        </population>
+      </city>
+      <city englishName="Napoli">
+        <russianName>
+           Неаполь
+        </russianName>
+        <population>
+          972212
+        </population>
+      </city>
+    </cities>
+  </country>
+  <country englishName="Czech Republic">
+    <russianName>Чехия</russianName>
+    <codeISO>CZE</codeISO>
+    <currencyCode>203</currencyCode>
+    <cities>
+      <city englishName="Prague">
+        <russianName>
+           Прага
+        </russianName>
+        <population>
+          1309000
+        </population>
+      </city>
+      <city englishName="Liberec">
+        <russianName>
+           Либерец
+        </russianName>
+        <population>
+          97770
+        </population>
+      </city>
+      <city englishName="Olomouc">
+        <russianName>
+           Оломоуц
+        </russianName>
+        <population>
+          101268
+        </population>
+      </city>
+    </cities>
+  </country>
+</countries>

@@ -10,7 +10,7 @@ namespace Tree1
     {
         private Node<T> Root;
         public int Count { get; private set; }
-        private IComparer<T> comparer;
+        private IComparer<T> comparer; //Для сравнивания узлов
 
         public Tree(IComparer<T> comparer)
         {
